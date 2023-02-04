@@ -1,0 +1,91 @@
+###CRUD Members - 
+###[Create]
+POST  http://localhost:4000/api/members
+Content-Type: application/json
+
+{
+    "name": "Eylon Mask",
+    "email": "Eylon@gmail.com",
+    "city": "Californaia"
+}
+###[Read]
+GET http://localhost:4000/api/members
+###[Read] byID
+GET http://localhost:4000/api/members/63d8d9ac1a96bb63c4e78c
+###[Update]
+PATCH  http://localhost:4000/api/members/63db73ae5b4868dc0d420b83
+Content-Type: application/json
+
+{
+    "name": "Elon Mask",
+    "email": "Elon@gmail.com",
+    "city": "Californaia"
+}
+###[Delete]
+DELETE  http://localhost:4000/api/members/63db73ae5b4868dc0d420b83
+###
+
+###CRUD Movies - 
+###[Create]
+POST  http://localhost:4000/api/movies
+Content-Type: application/json
+
+{
+    "name" : "Titanic",
+    "genres" : ["Drama", "Action", "Thriller"],
+    "image" : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXabh6Wr_g9AUj0soigYnWiNUAlbWRrcGnladrWxwxuA&s",
+    "premiered" : "1997"
+}
+###[Read]
+GET http://localhost:4000/api/movies
+###[Read] byID
+GET http://localhost:4000/api/movies/63db7072044a15d672a8bda9
+###[Update]
+PATCH  http://localhost:4000/api/movies/63db7072044a15d672a8bda9
+Content-Type: application/json
+
+{
+    "premiered" : "2001"
+}
+###[Delete]
+DELETE  http://localhost:4000/api/movies/63db72d0ce1bc877a9834d22
+###
+
+###CRUD Subscriptions
+###[Read]
+GET http://localhost:4000/api/members
+###[Read] byID
+GET http://localhost:4000/api/members/63d8d9ac1a96bb63c4e78c16
+###[Update]
+PATCH  http://localhost:4000/api/members/63db61efb83fb61b400ce445
+Content-Type: application/json
+
+{
+    "name": "Elon Mask",
+    "email": "Elon@gmail.com",
+    "city": "Californaia"
+}
+###[Delete]
+DELETE  http://localhost:4000/api/members/63db61efb83fb61b400ce445
+###
+
+###CRUD Subscriptions - 
+###[Create]
+POST  http://localhost:4000/api/subscriptions
+Content-Type: application/json
+
+{
+    "memberId" : "63dbb352cebbacf220af72d3",
+    "movieIdAndDateObj" : {
+                "movieId" :"63dbee6ad006ebabcca76f33",
+                "date" : "2023-05-02"
+    }
+}
+###[Read]
+GET http://localhost:4000/api/subscriptions
+###[Read] byID
+GET http://localhost:4000/api/subscriptions/63db65da757f4c0a95a78439
+
+###[Delete]
+DELETE  http://localhost:4000/api/subscriptions/63dbdef66e5acbf3908bba9a
+###
