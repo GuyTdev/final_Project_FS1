@@ -1,9 +1,7 @@
-import express from 'express';
 import mongoose from 'mongoose';
 
 import Movie from '../models/Movie.js'
 
-const router = express.Router();
 
 export const getMovies = async (req, res) => {
     try {
@@ -77,5 +75,3 @@ export const deleteMovie = async (req, res) => {
 }
 
 
-
-export default router;

@@ -4,34 +4,34 @@ POST  http://localhost:4000/api/members
 Content-Type: application/json
 
 {
-    "name": "Eylon Mask",
-    "email": "Eylon@gmail.com",
+    "name": "Eylon Mask 2",
+    "email": "Eylon2@gmail.com",
     "city": "Californaia"
 }
 ###[Read]
 GET http://localhost:4000/api/members
 ###[Read] byID
-GET http://localhost:4000/api/members/63d8d9ac1a96bb63c4e78c
+GET http://localhost:4000/api/members/63e20701bdaf8d32157a2781
 ###[Update]
-PATCH  http://localhost:4000/api/members/63db73ae5b4868dc0d420b83
+PATCH  http://localhost:4000/api/members/63e20701bdaf8d32157a2781
 Content-Type: application/json
 
 {
-    "name": "Elon Mask",
+    "name": "Elon 2 Mask",
     "email": "Elon@gmail.com",
     "city": "Californaia"
 }
 ###[Delete]
-DELETE  http://localhost:4000/api/members/63db73ae5b4868dc0d420b83
+DELETE  http://localhost:4000/api/subscriptios_ws/members/63db73ae5b4868dc0d420b83
 ###
 
-###CRUD Movies - 
+###CRUD Movies -######################################################################################################
 ###[Create]
 POST  http://localhost:4000/api/movies
 Content-Type: application/json
 
 {
-    "name" : "Titanic",
+    "name" : "Titanic 3",
     "genres" : ["Drama", "Action", "Thriller"],
     "image" : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXabh6Wr_g9AUj0soigYnWiNUAlbWRrcGnladrWxwxuA&s",
     "premiered" : "1997"
@@ -48,10 +48,10 @@ Content-Type: application/json
     "premiered" : "2001"
 }
 ###[Delete]
-DELETE  http://localhost:4000/api/movies/63db72d0ce1bc877a9834d22
+DELETE  http://localhost:4000/api/movies/63e49b10ab82bc0e4d39c3ea
 ###
 
-###CRUD Subscriptions
+###CRUD members ####################################################################
 ###[Read]
 GET http://localhost:4000/api/members
 ###[Read] byID
@@ -69,7 +69,7 @@ Content-Type: application/json
 DELETE  http://localhost:4000/api/members/63db61efb83fb61b400ce445
 ###
 
-###CRUD Subscriptions - 
+###CRUD Subscriptions -########################################################################################
 ###[Create]
 POST  http://localhost:4000/api/subscriptions
 Content-Type: application/json

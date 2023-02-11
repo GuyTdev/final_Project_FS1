@@ -1,6 +1,12 @@
 import dotenv from "dotenv";
 import express from "express";
 import jwt from "jsonwebtoken";
+import connectDB from "../cinema_ws/mongodb/connectDB.js";
+import authRouter from './routes/authRoutes.js'
+import usersRouter from './routes/usersRoutes.js'
+// import membersRouter from './routes/membersRoutes.js'
+// import moviesRouter from './routes/moviesRoutes.js'
+import subscriptionsWS_Router from './routes/subscriptionsWS_Routes.js'
 
 dotenv.config();
 const app = express();
@@ -33,6 +39,13 @@ const authenticateToken = (req, res, next) => {
     next();
   });
 };
+
+//Main Routes
+
+app.use('/auth', authRouter)
+app.use('/api/users', usersRouter)
+app.use('/api/subscriptions_ws', subscriptionsWS_Router)
+
 app.get("/users", authenticateToken, (req, res) => {
   res.json(posts.filter((post) => post.username === req.user.name));
 });
@@ -57,4 +70,14 @@ app.post("/login", (req, res) => {
 });
 
 const PORT = process.env.PORT || 3001;
-app.listen(PORT, () => console.log(`jwt server is running on port ${PORT}`));
+
+const URI = `mongodb+srv://${process.env.MONGO_DB_USER}:${process.env.MONGO_DB_PASSWORD}@cluster0.xne0r.mongodb.net/${process.env.MONGO_DATABASE_NAME}?retryWrites=true&w=majority`;
+ const startServer =async () =>{
+    try{
+        await connectDB(URI);
+        app.listen(PORT, () => console.log(`jwt server is running on port ${PORT}`))
+    }catch(error){
+        console.log(error);
+    }
+ }
+ startServer();

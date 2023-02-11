@@ -1,9 +1,5 @@
-import express from 'express';
-import mongoose from 'mongoose';
-
 import Member from '../models/Member.js'
 
-const router = express.Router();
 /**Create POST */
 export const createMember = async (req, res) => {
     try {
@@ -48,11 +44,11 @@ export const updateMember = async (req, res) => {
         const { id } = req.params;
         const { name, email, city } = req.body;
 
-        const updatedMember = {  name, email, city, _id: id };
+        const updatedMember = {  name, email, city };
 
-        await Member.findByIdAndUpdate(id, updatedMember, { new: true });
-
-        res.json.status(204).json(updatedMember);
+        await Member.findByIdAndUpdate(id, updatedMember)
+        return res.status(204).json(updatedMember)
+       
     } catch (error) {
         res.status(409).json({ message: error.message });
     }
@@ -76,5 +72,3 @@ export const deleteMember = async (req, res) => {
 }
 
 
-
-export default router;

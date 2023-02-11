@@ -2,7 +2,7 @@ import mongoose from "mongoose"
 import dotenv from 'dotenv'
 
 dotenv.config();
-//connect to mongoDB=>subscriptionsDB
+//connect to mongoDB=>usersDB
 const connectDB = async(uri) => {
     mongoose.set("strictQuery", false);
     mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true})

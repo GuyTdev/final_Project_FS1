@@ -1,8 +1,5 @@
-import express from 'express';
-import mongoose from 'mongoose';
 import Subscription from '../models/Subscription.js'
 
-const router = express.Router();
 /**Create Subscription */
 export const addMovieToSubscription = async (req, res) => {
     console.log(req.body);
@@ -48,11 +45,11 @@ export const getSubscriptions = async (req, res) => {
 }
 /**Read get Subscription byMemberId*/
 
-export const getSubscriptionbyMemberId = async (req, res) => {
-    const { memberId } = req.params;
+export const getSubscriptionByMemberId = async (req, res) => {
+    const { member_id: memberId } = req.params;
 
     try {
-        const subscription = await Subscription.find({memberId});
+        const subscription = await Subscription.findOne({memberId});
         res.status(200).json(subscription)
     } catch (error) {
         res.status(409).json({ message: error.message });
@@ -101,5 +98,3 @@ export const deleteSubscription = async (req, res) => {
 }
 
 
-
-export default router;
