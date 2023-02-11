@@ -9,7 +9,7 @@ export const addMovieToSubscription =  (movieObj) => {
    return axios.post(`${subscriptionsUri}`, movieObj);
 }
 
-export const getSubscriptions = async () => {
+export const getSubscriptions = () => {
    return axios.get(`${subscriptionsUri}`)
 }
 
@@ -30,7 +30,7 @@ export const createMovie =  (movieObj) => {
    return axios.post(`${moviesUri}`, movieObj);
 }
 
-export const getMovies = async () => {
+export const getMovies = () => {
    return axios.get(`${moviesUri}`)
 }
 
@@ -52,7 +52,7 @@ export const createMember =  (memberObj) => {
    return axios.post(`${membersUri}`, memberObj);
 }
 
-export const getMembers = async () => {
+export const getMembers = () => {
    return axios.get(`${membersUri}`)
 }
 
