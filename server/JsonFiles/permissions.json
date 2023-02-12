@@ -1,1 +1,47 @@
-{"permissions":[{"_id":"63e4dc662dd81ece7583d5dc","permissions":["View Subscriptions","Create Subscriptions","Delete Subscriptions","Update Subscriptions","View Movies","Create Movies","Delete Movies","Update Movies","View Subscriptions","Create Subscriptions","Delete Subscriptions","Update Subscriptions","View Users","Create Users","Delete Users","Update Users"]},{"_id":"63e53585e5bf8b8f6027a42d","permissions":["View Subscriptions","Create Subscriptions","Delete Subscriptions","Update Subscriptions","View Movies","Create Movies","Delete Movies","Update Movies","View Subscriptions","Create Subscriptions","Delete Subscriptions","Update Subscriptions","View Users","Create Users","Delete Users","Update Users"]},{"_id":"63e53603ea613134d820f67f","permissions":["View Subscriptions","View Movies"]}]}
+{
+  "permissions": [
+    {
+      "_id": "63e4dc662dd81ece7583d5dc",
+      "permissions": [
+        "View Subscriptions",
+        "Create Subscriptions",
+        "Delete Subscriptions",
+        "Update Subscriptions",
+        "View Movies",
+        "Create Movies",
+        "Delete Movies",
+        "Update Movies",
+        "View Subscriptions",
+        "View Users",
+        "Create Users",
+        "Delete Users",
+        "Update Users"
+      ]
+    },
+    {
+      "_id": "63e53585e5bf8b8f6027a42d",
+      "permissions": [
+        "View Subscriptions",
+        "Create Subscriptions",
+        "Delete Subscriptions",
+        "Update Subscriptions",
+        "View Movies",
+        "Create Movies",
+        "Delete Movies",
+        "Update Movies",
+        "View Subscriptions",
+        "Create Subscriptions",
+        "Delete Subscriptions",
+        "Update Subscriptions",
+        "View Users",
+        "Create Users",
+        "Delete Users",
+        "Update Users"
+      ]
+    },
+    {
+      "_id": "63e53603ea613134d820f67f",
+      "permissions": ["View Subscriptions", "View Movies"]
+    }
+  ]
+}
