@@ -3,6 +3,8 @@ import bcrypt from 'bcrypt'
 
 import * as permissionsJsonFile_DAL from './DALs/permissionsJsonFile_DAL.js'
 import * as usersJsonFile_DAL from './DALs/usersJsonFile_DAL.js'
+import * as jsonFilesUtils from './BLs/jsonFilesUtils.js'
+
 
 export const getUsers = async (req, res) => {
     try {
@@ -27,24 +29,25 @@ export const getUser = async (req, res) => {
 
 export const updateUser = async (req, res) => {
     try {
-        const {_id} = req.params;
+        const {id} = req.params;
         const { firstName,lastName, username, sessionTimeout, permissions} = req.body;
-        userPermissionsObject ={_id, permissions}
-        userDataObject ={_id, firstName,lastName, sessionTimeout}
+        const userPermissionsObject ={_id: id, permissions}
+        let userDataObject =await jsonFilesUtils.getUserDataById(id);
+        userDataObject ={...userDataObject, firstName:firstName,lastName:lastName, sessionTimeout:sessionTimeout}
         //update username in usersDB users collection
-        await User.findByIdAndUpdate(_id,{username})
-        //read old data from permissions.json and users.json
-        let permissionsJsonFileContent = await permissionsJsonFile_DAL.readPermissionsJsonFile();
-        let usersJsonFileContent = await usersJsonFile_DAL.readPermissionsJsonFile();
+        const updateUserResp = await User.findByIdAndUpdate(id,{username},{new:true})
+        console.log("updateUserResp: ",updateUserResp)
+        console.log("userDataObject: ",userDataObject)
+;
+        if(updateUserResp){
+            //update permissions json file
+            await jsonFilesUtils.updateUserPermissions(userPermissionsObject);
+            //update users json file
+            await jsonFilesUtils.updateUserData(userDataObject);
+            return res.json(`user with id ${id} updated`)
+        }
+        res.json(`user with id ${id} does not exist`)
 
-        //Modify old file content to a new file contents (with new user objects) to be ready for insertion and overwrite both files:
-        let newPermissionsJsonFileContent = modifyPermissionsArrayInJsonObj(permissionsJsonFileContent, userPermissionsObject)
-        let newUsersJsonFileContent = modifyUserDataInJsonObj(usersJsonFileContent, userDataObject)
-
-        //Write new data to permissions.json and users.json
-        await permissionsJsonFile_DAL.writeToPermissionsJsonFile(newPermissionsJsonFileContent);
-        await usersJsonFile_DAL.writeToUsersJsonFile(newUsersJsonFileContent);
-        return res.status(201).json(`user with id ${_id} updated`)
     } catch (error) {
         res.status(409).json({ message: error.message });
     }
@@ -65,32 +68,29 @@ export const createUser = async (req, res) =>
             username: userObj.username,
             password: "initialPassword"
         })
-        await newUserCredentials.save();
+        const created = await newUserCredentials.save();
+        console.log("created=>",created);
         //get the new User _id mongoDB has generated
-        const _id= newUserCredentials._id 
+        const _id= newUserCredentials._id
+        if(_id){
+            //get permissionsObj = {_id, permissionsArray} from userObj
+            const newUserPermissionsObj = {_id, permissions: userObj.permissions}
+            //get usersDataObj = {_id, firstName, lastName, createdDate, sessionsTimeout(in minutes)} from userObj
+            const newUserDataObj = {_id: newUserCredentials._id, firstName: userObj.firstName, lastName: userObj.lastName, sessionTimeout: userObj.sessionTimeout}
+            //get user credentials from userObj
 
-        //get permissionsObj = {_id, permissionsArray} from userObj
-        const newUserPermissionsObj = {_id, permissions: userObj.permissions}
-        //get usersDataObj = {_id, firstName, lastName, createdDate, sessionsTimeout(in minutes)} from userObj
-        const newUserDataObj = {_id: newUserCredentials._id, firstName: userObj.firstName, lastName: userObj.lastName, sessionsTimeout: userObj.sessionsTimeout}
-        //get user credentials from userObj
+            //add new user permissionsObj to permissionsJsonFile
+            await jsonFilesUtils.insertNewUserPermissions(newUserPermissionsObj);
+            //add new user userDataObj to usersJsonFile
+            await jsonFilesUtils.insertNewUserData(newUserDataObj);
 
-        //read old data from permissions.json and users.json
-        let permissionsJsonFileContent = await permissionsJsonFile_DAL.readPermissionsJsonFile();
-        let usersJsonFileContent = await usersJsonFile_DAL.readUsersJsonFile();
-
-        //Modify old file content to a new file contents (with new user objects) to be ready for insertion and overwrite both files:
-        let newPermissionsJsonFileContent = addNewUserToJsonPermissionsFileContentObj(permissionsJsonFileContent, newUserPermissionsObj)
-        let newUsersJsonFileContent = addNewUserDataInJsonUsersFileContentObj(usersJsonFileContent, newUserDataObj)
-
-        //Write new data to permissions.json and users.json
-        await permissionsJsonFile_DAL.writeToPermissionsJsonFile(newPermissionsJsonFileContent);
-        await usersJsonFile_DAL.writeToUsersJsonFile(newUsersJsonFileContent);
-        
-        res.status(201).json(`user with id ${_id} has been created !`)
+            return res.status(201).json(`user with id ${_id} has been created !`)
+        }
+        res.status(409).json(`user with id ${_id} already exists`)
 
     }catch(error){
-        console.log(error);
+        res.status(409).json(error.message);
+
     }
 
 }
@@ -104,23 +104,18 @@ export const createUser = async (req, res) =>
 export const deleteUser = async (req, res) =>
 {
     try{
-        const _id = req.params;
+        const {id} = req.params;
         //delete user from users collection in usersDB using User mongoose model
-        await User.findByIdAndDelete(_id);
-
-        //read old data from permissions.json and users.json
-        let permissionsJsonFileContent = await permissionsJsonFile_DAL.readPermissionsJsonFile();
-        let usersJsonFileContent = await usersJsonFile_DAL.readPermissionsJsonFile();
-
-        //Modify old files contents to new files contents (with deleted user objects) to be ready for insertion and overwrite both files:
-        let newPermissionsJsonFileContent = deleteUserToJsonPermissionsFileContentObj(permissionsJsonFileContent, newUserPermissionsObj)
-        let newUsersJsonFileContent = deleteUserDataInJsonUsersFileContentObj(usersJsonFileContent, newUserDataObj)
-
-        //Write new data to permissions.json and users.json
-        await permissionsJsonFile_DAL.writeToPermissionsJsonFile(newPermissionsJsonFileContent);
-        await usersJsonFile_DAL.writeToUsersJsonFile(newUsersJsonFileContent);
-        
-        res.status(201).json(`user with id ${_id} has been deleted !`)
+        const deleteUserResp = await User.findByIdAndDelete(id);
+        console.log("deleteUserResp:",deleteUserResp);
+        if(deleteUserResp){
+            //delete user from permissionsJsonFile
+            await jsonFilesUtils.deleteUserPermissionsFromJsonFile(id);
+            //delete user from usersJsonFile
+            await jsonFilesUtils.deleteUserFromUsersDataJsonFile(id);
+            return res.status(201).json(`user with id ${id} has been deleted !`)
+        }
+        res.status(201).json(`user with id ${id} not exist !`)
 
     }catch(error){
         console.log(error);
@@ -140,7 +135,7 @@ export const modifyPermissionsArrayInJsonObj = (oldPermissionsJsonObj, newUserPe
     const {_id, permissions: newPermissionsArray} = newUserPermissionsObj;
     const newPermissionsJsonObj = {"permissions": oldPermissionsJsonObj.permissions
                 .map(perObj =>
-                    perObj.userId === _id
+                    perObj._id === _id
                     ? {...perObj, permissions:newPermissionsArray}
                     : perObj)}
 
@@ -155,13 +150,41 @@ export const modifyPermissionsArrayInJsonObj = (oldPermissionsJsonObj, newUserPe
 export const modifyUserDataInJsonObj = (oldUsersJsonObj, newUserDataObj) =>{
     const {_id} = newUserDataObj;
     const updatedUserDataObj = {...newUserDataObj ,_id : newUserDataObj._id }
-    updatedUserJsonFileContentObj = {"users": oldUsersJsonObj.users
+    const updatedUserJsonFileContentObj = {"users": oldUsersJsonObj.users
                 .map(userObj =>
                     userObj._id === _id
                     ? newUserDataObj
                     : userObj)}
 
     return updatedUserJsonFileContentObj;
+}
+/**
+ * @description get a file content, delete data of specific user ==> return the new file content
+ * @param {oldJsonfileContent} oldPermissionsJsonObj 
+ * @param {_id} ObjectId  
+ * @returns newJsonFileContent
+ */
+export const deleteUserPermissionsObjInJsonObj = (oldPermissionsJsonObj, _id) =>{
+    const index = oldPermissionsJsonObj.permissions.findIndex(perObj => perObj._id === _id)
+    if(index!== -1){
+        oldPermissionsJsonObj.permissions.splice(index, 1)
+    }
+
+    return oldPermissionsJsonObj;
+}
+/**
+* @description get a file content, delete data of specific user ==> return the new file content
+* @param {oldJsonfileContent} oldPermissionsJsonObj 
+* @param {_id} ObjectId  
+* @returns newJsonFileContent
+*/
+export const deleteUserDataObjInJsonObj = (oldUsersDataJsonObjFileContent, _id) =>{
+   const index = oldUsersDataJsonObjFileContent.users.findIndex(userObj => userObj._id === _id)
+   if(index!== -1){
+    oldUsersDataJsonObjFileContent.users.splice(index, 1)
+   }
+
+   return oldUsersDataJsonObjFileContent;
 }
 /**
  * @description get a file content, push new user data to the file content ==> return the new file content

@@ -1,23 +1,23 @@
 import express from "express";
-import * as subscriptionsWS_BL from '../controllers/subscriptionsWS_BL.js'
+import * as subscriptionsWSController from '../controllers/subscriptionsWSController.js'
 const router = express.Router();
 
-router.post('subscriptions', subscriptionsWS_BL.addMovieToSubscription);
-router.get('subscriptions', subscriptionsWS_BL.getSubscriptions);
-router.get('subscriptions/:id', subscriptionsWS_BL.getSubscription);
-router.get('subscriptions/:member_id', subscriptionsWS_BL.getSubscription);
-router.delete('subscriptions/:id', subscriptionsWS_BL.deleteSubscription);
+router.post('/subscriptions', subscriptionsWSController.addMovieToSubscription);
+router.get('/subscriptions', subscriptionsWSController.getSubscriptions);
+router.get('/subscriptions/:id', subscriptionsWSController.getSubscription);
+router.get('/subscriptions/:member_id', subscriptionsWSController.getSubscription);
+router.delete('/subscriptions/:id', subscriptionsWSController.deleteSubscription);
 
-router.post('members', subscriptionsWS_BL.createMember);
-router.get('members', subscriptionsWS_BL.getMembers);
-router.get('members/:id', subscriptionsWS_BL.getMember);
-router.patch('members/:id', subscriptionsWS_BL.updateMember);
-router.delete('members/:id', subscriptionsWS_BL.deleteMember);
+router.post('/members', subscriptionsWSController.createMember);
+router.get('/members', subscriptionsWSController.getMembers);
+router.get('/members/:id', subscriptionsWSController.getMember);
+router.patch('/members/:id', subscriptionsWSController.updateMember);
+router.delete('/members/:id', subscriptionsWSController.deleteMember);
 
-router.post('movies', subscriptionsWS_BL.createMovie);
-router.get('movies', subscriptionsWS_BL.getMovies);
-router.get('movies/:id', subscriptionsWS_BL.getMovie);
-router.patch('movies/:id', subscriptionsWS_BL.updateMovie);
-router.delete('movies/:id', subscriptionsWS_BL.deleteMovie);
+router.post('/movies', subscriptionsWSController.createMovie);
+router.get('/movies', subscriptionsWSController.getMovies);
+router.get('/movies/:id', subscriptionsWSController.getMovie);
+router.patch('/movies/:id', subscriptionsWSController.updateMovie);
+router.delete('/movies/:id', subscriptionsWSController.deleteMovie);
 
 export default router;

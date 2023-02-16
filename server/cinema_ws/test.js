@@ -10,34 +10,34 @@
 // oldUsersJsonObj = await JFile.readFile(file2)
 // console.log("oldUsersJsonObj", oldUsersJsonObj);
 //helpers functions---------------------------------------------------------------------------------------
-export const modifyPermissionsArrayInJsonObj = (oldPermissionsJsonObj, newUserPermissionsObj) =>{
-    const {userId, permissions: newPermissionsArray} = newUserPermissionsObj;
-    const newPermissionsJsonObj = {"permissions": oldPermissionsJsonObj.permissions
-                .map(perObj => 
-                    perObj.userId === userId
-                    ? {...perObj, permissions:newPermissionsArray}
-                    : perObj)}
+// export const modifyPermissionsArrayInJsonObj = (oldPermissionsJsonObj, newUserPermissionsObj) =>{
+//     const {userId, permissions: newPermissionsArray} = newUserPermissionsObj;
+//     const newPermissionsJsonObj = {"permissions": oldPermissionsJsonObj.permissions
+//                 .map(perObj => 
+//                     perObj.userId === userId
+//                     ? {...perObj, permissions:newPermissionsArray}
+//                     : perObj)}
     
-    return newPermissionsJsonObj;
-}
+//     return newPermissionsJsonObj;
+// }
 
-export const modifyUserDataInJsonObj = (oldUsersJsonObj, newUsersDataObj) =>{
-    const {_id} = newUserDataObj;
-    const newUserDataObj = {...newUsersDataObj ,_id : newUsersDataObj.userId }
-    const newUsersJsonObj = {"users": oldUsersJsonObj.users
-                .map(userObj => 
-                    userObj._id === _id
-                    ? newUserDataObj
-                    : userObj)}
+// export const modifyUserDataInJsonObj = (oldUsersJsonObj, newUsersDataObj) =>{
+//     const {_id} = newUserDataObj;
+//     const newUserDataObj = {...newUsersDataObj ,_id : newUsersDataObj.userId }
+//     const newUsersJsonObj = {"users": oldUsersJsonObj.users
+//                 .map(userObj => 
+//                     userObj._id === _id
+//                     ? newUserDataObj
+//                     : userObj)}
 
-                    return newUsersJsonObj;
-}
-export const addNewUserDataInJsonUsersFileContentObj = (oldUsersJsonObj, newUserDataObj) =>{
-    let createdDate = new Date().toISOString()
-    newUserDataObj = {...newUserDataObj, createdDate}
-    oldUsersJsonObj.users.push(newUserDataObj)
-    return oldUsersJsonObj;
-}
+//                     return newUsersJsonObj;
+// }
+// export const addNewUserDataInJsonUsersFileContentObj = (oldUsersJsonObj, newUserDataObj) =>{
+//     let createdDate = new Date().toISOString()
+//     newUserDataObj = {...newUserDataObj, createdDate}
+//     oldUsersJsonObj.users.push(newUserDataObj)
+//     return oldUsersJsonObj;
+// }
 //helpers functions end------------------------------------------------------------------------------------
 
 // const newUserPermissionsObj =
@@ -55,19 +55,25 @@ export const addNewUserDataInJsonUsersFileContentObj = (oldUsersJsonObj, newUser
 // import * as permissionsJsonFile_DAL from './controllers/DALs/permissionsJsonFile_DAL.js'
 //   let permissionsJsonFileContent = await permissionsJsonFile_DAL.readPermissionsJsonFile();
 //   console.log("permissionsJsonFileContent:", permissionsJsonFileContent);
-import * as usersJsonFile_DAL from './controllers/DALs/usersJsonFile_DAL.js'
-  let usersJsonFileContent = await usersJsonFile_DAL.readUsersJsonFile();
-  console.log("usersJsonFileContent:", usersJsonFileContent);
+// import * as usersJsonFile_DAL from './controllers/DALs/usersJsonFile_DAL.js'
+//   let usersJsonFileContent = await usersJsonFile_DAL.readUsersJsonFile();
+//   console.log("usersJsonFileContent:", usersJsonFileContent);
 
-  let newUserObj =     {
-    _id: '61939bf316e4a6c0aeb009d7',
-    firstName: 'Ori',
-    lastName: 'Anavim',
-    sessionTimeout: '3'
-  }
+//   let newUserObj =     {
+//     _id: '61939bf316e4a6c0aeb009d7',
+//     firstName: 'Ori',
+//     lastName: 'Anavim',
+//     sessionTimeout: '3'
+//   }
 
-  const newFileContent = addNewUserDataInJsonUsersFileContentObj(usersJsonFileContent, newUserObj)
-  console.log(newFileContent);
+//   const newFileContent = addNewUserDataInJsonUsersFileContentObj(usersJsonFileContent, newUserObj)
+//   console.log(newFileContent);
 
-  const resp2 = await usersJsonFile_DAL.writeToUsersJsonFile(newFileContent);
-  console.log("resp2", resp2);
+//   const resp2 = await usersJsonFile_DAL.writeToUsersJsonFile(newFileContent);
+//   console.log("resp2", resp2);
+import * as JsonFilesUtils from '../JsonFiles/jsonFilesUtils.js'
+const userPermissions = JsonFilesUtils.getUserPermissionsById('63ea3b799ef0ac2fee5d4e81')
+const userData =  JsonFilesUtils.getUserDataById('63ea3b799ef0ac2fee5d4e81')
+
+console.log("userPermissions:",  userPermissions);
+console.log("userData:",  userData);

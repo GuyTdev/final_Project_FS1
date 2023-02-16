@@ -16,9 +16,10 @@ export const updatePassword = async (req, res) => {
     const salt = await bcrypt.genSalt();
     const passwordHash = await bcrypt.hash(password, salt);
 
-    const updatedUser = await User.updateOne({username},{password: passwordHash});
-    console.log(updatedUser);
-    res.status(200).json({message: "password updated!" });
+    const {modifiedCount} = await User.updateOne({username},{password: passwordHash});
+    console.log("modifiedCount:",modifiedCount );
+    if(modifiedCount===1)
+      res.status(200).json({message: "password updated!" });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

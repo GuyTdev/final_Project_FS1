@@ -1,5 +1,5 @@
 import axios from 'axios'
-const subscriptionsWsBaseUri = 'http://localhost:4000/api/'
+const subscriptionsWsBaseUri = 'http://localhost:4000/api'
 const subscriptionsUri = `${subscriptionsWsBaseUri}/subscriptions`
 const membersUri = `${subscriptionsWsBaseUri}/members`
 const moviesUri = `${subscriptionsWsBaseUri}/movies`
@@ -34,16 +34,17 @@ export const getMovies = () => {
    return axios.get(`${moviesUri}`)
 }
 
-export const getMovie =  () => {
+export const getMovie =  (id) => {
    return axios.get(`${moviesUri}/${id}`);
 }
 
-export const updateMovie =  () => {
-   return axios.patch(`${moviesUri}/${id}`)
+export const updateMovie =  (id, movieObj) => {
+   return axios.patch(`${moviesUri}/${id}`, movieObj)
 }
 
-export const deleteMovie = () => {
-   return axios.delete(`${moviesUri}`)
+export const deleteMovie = (id) => {
+   return axios.delete(`${moviesUri}/${id}`)
+
 }
 
 /** members **/
@@ -56,15 +57,15 @@ export const getMembers = () => {
    return axios.get(`${membersUri}`)
 }
 
-export const getMember =  () => {
+export const getMember =  (id) => {
    return axios.get(`${membersUri}/${id}`);
 }
 
-export const updateMember =  () => {
-   return axios.patch(`${membersUri}/${id}`)
+export const updateMember =  (id, memberObj) => {
+   return axios.patch(`${membersUri}/${id}`, memberObj)
 }
 
-export const deleteMember = () => {
-   return axios.delete(`${membersUri}`)
+export const deleteMember = (id) => {
+   return axios.delete(`${membersUri}/${id}`)
 }
 

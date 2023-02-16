@@ -8,16 +8,24 @@ import * as subscriptionsWS_DAL from './DALs/subscriptionsWS_DAL.js'
 /**Create Subscription */
 export const addMovieToSubscription = async (req, res) => {
    const movieObj = req.body;
-   const {data: subscription} = await subscriptionsWS_DAL.addMovieToSubscription(movieObj)
-   res.send(subscription);
+    try {
+        const {data: subscription} = await subscriptionsWS_DAL.addMovieToSubscription(movieObj)
+        res.send(subscription);
+    } catch (error) {
+        res.send(error.message)}
 }
 // @description Get all subscriptions in subscriptions collection
 // @route GET /subscriptions
 // @access Private
 /**Read get all Subscriptions */
 export const getSubscriptions = async (req, res) => {
-    const {data: subscriptions} = await subscriptionsWS_DAL.getSubscriptions()
-    res.send(subscriptions);
+    try {
+        
+        const {data: subscriptions} = await subscriptionsWS_DAL.getSubscriptions()
+        res.send(subscriptions);
+    } catch (error) {
+        res.send(error.message)
+    }
 }
 
 // @description Get subscription by memberId from subscriptions collection
@@ -26,8 +34,13 @@ export const getSubscriptions = async (req, res) => {
 /**Read get Subscription byMemberId*/
 export const getSubscriptionByMemberId = async (req, res) => {
     const {member_id} = req.params;
-   const {data: subscription} = await subscriptionsWS_DAL.getSubscriptionByMemberId(member_id)
-   res.send(subscription);
+    try {
+        
+        const {data: subscription} = await subscriptionsWS_DAL.getSubscriptionByMemberId(member_id)
+        res.send(subscription);
+    } catch (error) {
+        res.send(error.message)
+    }
 }
 
 // @description Get subscription by id from subscriptions collection
@@ -36,8 +49,12 @@ export const getSubscriptionByMemberId = async (req, res) => {
 /**Read GET Subscription byId*/
 export const getSubscription = async (req, res) => {
     const {id} = req.params;
-    const {data:subscription} = await subscriptionsWS_DAL.getSubscription(id);
-    res.send(subscription);
+    try {
+        const {data:subscription} = await subscriptionsWS_DAL.getSubscription(id);
+        res.send(subscription);
+    } catch (error) {
+        res.send(error.message)
+    }
 }
 
 // @description Delete a subscription by id
@@ -46,8 +63,12 @@ export const getSubscription = async (req, res) => {
 /**Delete Subscription */
 export const deleteSubscription = async (req, res) => {
     const {id} = req.params;
-    const {data: deleteResp} = await subscriptionsWS_DAL.deleteSubscription(id);
-    res.send(deleteResp);
+    try {
+        const {data: deleteResp} = await subscriptionsWS_DAL.deleteSubscription(id);
+        res.send(deleteResp);
+    } catch (error) {
+        res.send(error.message)
+    }
 }
 
 /**     subscriptions/movies     **/
@@ -57,8 +78,12 @@ export const deleteSubscription = async (req, res) => {
 /**Create POST */
 export const createMovie = async (req, res) => {
     const movieObj = req.body;
-    const {data: createMovieResp} = await subscriptionsWS_DAL.createMovie(movieObj);
-    res.send(createMovieResp);
+    try {
+        const {data: createMovieResp} = await subscriptionsWS_DAL.createMovie(movieObj);
+        res.send(createMovieResp);
+    } catch (error) {
+        res.send(error.message)
+    }
 }
 
 // @description Get all movies
@@ -66,8 +91,12 @@ export const createMovie = async (req, res) => {
 // @access Private
 /**Read GET */
 export const getMovies = async (req, res) => {
-    const {data:movies} = await subscriptionsWS_DAL.getMovies();
-    res.send(movies);
+    try {
+        const {data:movies} = await subscriptionsWS_DAL.getMovies();
+        res.send(movies);
+    } catch (error) {
+        res.send(error.message)
+    }
 }
 
 // @description Get movie
@@ -76,8 +105,12 @@ export const getMovies = async (req, res) => {
 /**Read GET */
 export const getMovie = async (req, res) => {
     const {id} = req.params;
-    const {data:movies} = await subscriptionsWS_DAL.getMovies(id);
-    res.send(movies);
+    try {
+        const {data:movies} = await subscriptionsWS_DAL.getMovie(id);
+        res.send(movies);
+    } catch (error) {
+        res.send(error.message)
+    }
 }
 
 // @description Update movie
@@ -85,9 +118,14 @@ export const getMovie = async (req, res) => {
 // @access Private
 /**Update PATCH / PUT */
 export const updateMovie = async (req, res) => {
+    const {id} = req.params;
     const movieObj = req.body;
-    const {data:updateMovieResp} = await subscriptionsWS_DAL.updateMovie(movieObj);
-    res.send(updateMovieResp);
+    try {
+        const {data:updateMovieResp} = await subscriptionsWS_DAL.updateMovie(id, movieObj);
+        res.send(updateMovieResp);
+    } catch (error) {
+        res.send(error.message)
+    }
 }
 
 // @desc Delete a movie
@@ -96,8 +134,12 @@ export const updateMovie = async (req, res) => {
 /**Delete DELETE */
 export const deleteMovie = async (req, res) => {
     const {id} = req.params;
-    const {data: deleteResp} = await subscriptionsWS_DAL.deleteMember(id);
-    res.send(deleteResp);
+    try {
+        const {data: deleteResp} = await subscriptionsWS_DAL.deleteMovie(id);
+        res.send(deleteResp);
+    } catch (error) {
+        res.send(error.message)
+    }
 }
 
 
@@ -108,8 +150,12 @@ export const deleteMovie = async (req, res) => {
 /**Create POST */
 export const createMember = async (req, res) => {
     const memberObj = req.body;
-    const {data: createMemberResp} = await subscriptionsWS_DAL.createMember(memberObj);
-    res.send(createMemberResp);
+    try {
+        const {data: createMemberResp} = await subscriptionsWS_DAL.createMember(memberObj);
+        res.send(createMemberResp);
+    } catch (error) {
+        res.send(error.message)
+    }
 }
 
 // @description Get all members
@@ -117,8 +163,12 @@ export const createMember = async (req, res) => {
 // @access Private
 /**Read GET */
 export const getMembers = async (req, res) => {
-    const {data:members} = await subscriptionsWS_DAL.getMembers();
-    res.send(members);
+    try {
+        const {data: members} = await subscriptionsWS_DAL.getMembers();
+        res.send(members);
+    } catch (error) {
+        res.send(error.message)
+    }
 }
 
 // @description Get member
@@ -127,8 +177,12 @@ export const getMembers = async (req, res) => {
 /**Read GET */
 export const getMember = async (req, res) => {
     const {id} = req.params;
-    const {data:members} = await subscriptionsWS_DAL.getMembers(id);
-    res.send(members);
+    try {
+        const {data: getMemberResp} = await subscriptionsWS_DAL.getMember(id);
+        res.send(getMemberResp);
+    } catch (error) {
+        res.send({message: error.message});
+    }
 }
 
 // @description Update member
@@ -136,10 +190,17 @@ export const getMember = async (req, res) => {
 // @access Private
 /**Update PATCH / PUT */
 export const updateMember = async (req, res) => {
+    const {id} = req.params;
     const memberObj = req.body;
-    const {data:updateMemberResp} = await subscriptionsWS_DAL.updateMember(memberObj);
-    res.send(updateMemberResp);
+    try{
+        const {data:member} = await subscriptionsWS_DAL.updateMember(id, memberObj);
+        return res.send(member)
+    }
+    catch(err){
+        res.send({message: err.message});
+    }
 }
+
 
 // @desc Delete a member
 // @route DELETE /members
@@ -147,6 +208,10 @@ export const updateMember = async (req, res) => {
 /**Delete DELETE */
 export const deleteMember = async (req, res) => {
     const {id} = req.params;
-    const {data: deleteResp} = await subscriptionsWS_DAL.deleteMember(id);
-    res.send(deleteResp);
+    try {
+        const {data: deleteResp} = await subscriptionsWS_DAL.deleteMember(id);
+        res.send(deleteResp);
+    } catch (error) {
+        res.send(error.message)
+    }
 }

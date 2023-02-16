@@ -13,7 +13,7 @@ GET http://localhost:4000/api/members
 ###[Read] byID
 GET http://localhost:4000/api/members/63e20701bdaf8d32157a2781
 ###[Update]
-PATCH  http://localhost:4000/api/members/63e20701bdaf8d32157a2781
+PATCH  http://localhost:4000/api/members/63ecd1c27f000ed81924f3b1
 Content-Type: application/json
 
 {

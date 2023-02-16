@@ -31,9 +31,13 @@ export const getMember = async (req, res) => {
 
     try {
         const member = await Member.findById(id);
-        res.status(200).json(member);
+        if(member){
+            return res.json(member);
+        }else{
+            res.json({ message: `No Member with id: ${id}`})
+        }
     } catch (error) {
-        res.status(404).json({ message: error.message });
+        res.status(409).json({ message: error.message });
     }
 }
 
@@ -46,9 +50,12 @@ export const updateMember = async (req, res) => {
 
         const updatedMember = {  name, email, city };
 
-        await Member.findByIdAndUpdate(id, updatedMember)
-        return res.status(204).json(updatedMember)
-       
+        const updatedMemberResp = await Member.findByIdAndUpdate(id, updatedMember, {
+            new:true
+          })
+        if(updatedMemberResp)
+             return res.json({success:true, message:'updated'})
+        res.json({success:false, message:'member doesn\'t exist'})
     } catch (error) {
         res.status(409).json({ message: error.message });
     }
@@ -64,7 +71,6 @@ export const deleteMember = async (req, res) => {
             res.status(202).json({message: `Member with id :${resp._id} deleted successfully`} );
         }else{
             res.status(404).send({ message:`No Member with id: ${id}`})
-
         }
     } catch (error) {
         res.status(409).json({ message: error.message });
