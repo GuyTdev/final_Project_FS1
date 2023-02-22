@@ -1,0 +1,10 @@
+.user_box{
+    border: 1px solid;
+    max-width: 300px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    margin: 5px;
+    padding: 10px;
+    text-align: left;
+    font-family: arial;
+    color: rgb(120, 149, 204);
+}

@@ -51,9 +51,9 @@ export const deleteUserFromUsersDataJsonFile = async (_id)=>{
 }
 export const getUserPermissionsById = async(id)=>{
     //read old data from permissions.json
-    let {permissions: usersPermissionsArray} = await permissionsJsonFile_DAL.readPermissionsJsonFile();
-    const {permissions: userPermissions} =  usersPermissionsArray.find(perObj => perObj._id === id);
-    return userPermissions;
+    let usersPermissionsObjFileContent = await permissionsJsonFile_DAL.readPermissionsJsonFile();
+    const foundPermissionsObj =  usersPermissionsObjFileContent.permissions.find(perObj => perObj._id === id);
+    return foundPermissionsObj?.permissions;
 }
 
 export const getUserDataById= async(id)=>{
@@ -61,6 +61,16 @@ export const getUserDataById= async(id)=>{
     let usersDataObjFileContent = await usersJsonFile_DAL.readUsersJsonFile();
     const foundUserObj = usersDataObjFileContent.users.find(userObj => userObj._id === id);
     return foundUserObj;
+}
+export const buildUserFullDataObjArray = async(usersArray) => {
+    let allDetailsUsersArray = [];
+    for(const user of usersArray) {
+        let userDataObject = await getUserDataById(user._id.toString());
+        let userPermissionsArray = await getUserPermissionsById(user._id.toString())
+        let userDetailsObj = {...userDataObject, username: user.username, permissions: userPermissionsArray}
+        allDetailsUsersArray.push(userDetailsObj)
+    };
+    return allDetailsUsersArray;
 }
 
 //helper functions with json files content:--------------------------------------------------------------------------------------

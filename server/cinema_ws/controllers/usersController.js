@@ -8,8 +8,12 @@ import * as jsonFilesUtils from './BLs/jsonFilesUtils.js'
 
 export const getUsers = async (req, res) => {
     try {
-        const users = await User.find();
-        res.status(200).json(users);
+        let users = await User.find();
+        if(users?.length > 0) {
+            let allDetailsUsersArray = await jsonFilesUtils.buildUserFullDataObjArray(users);
+            return res.json(allDetailsUsersArray);
+        }
+        res.json('no users found');
     } catch (error) {
         res.status(404).json({ message: error.message });
     }
@@ -20,7 +24,14 @@ export const getUser = async (req, res) => {
 
     try {
         const user = await User.findById(id);
-        res.status(200).json(user);
+        console.log("user grabbed=>",user);
+        if(user){
+            let userDataObject =await jsonFilesUtils.getUserDataById(id);
+            let userPermissionsArray =await jsonFilesUtils.getUserPermissionsById(id)
+            const userDetailsObj ={...userDataObject, username: user.username, permissions: userPermissionsArray}
+            return res.json(userDetailsObj);
+        }
+        res.json(`user with id ${id} does not exist`)
     } catch (error) {
         res.status(404).json({ message: error.message });
     }

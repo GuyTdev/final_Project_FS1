@@ -35,6 +35,8 @@ Content-Type: application/json
 
 ###[Read] get users
 GET http://localhost:3000/api/users
+###[Read] get user
+GET http://localhost:3000/api/users/63eddf5343b0770ef7911102
 ###[Create] Create new user with all permissions and details
 POST  http://localhost:3000/api/users
 Content-Type: application/json
