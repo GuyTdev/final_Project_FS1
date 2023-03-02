@@ -7,6 +7,10 @@ export const usersApi = apiSlice.injectEndpoints({
       query: () => `/users`,
       providesTags: ['Users'],
     }),
+    getUser: builder.query({
+      query: (id) => `/users/${id}`,
+      providesTags: ['Users'],
+    }),
     createUser: builder.mutation({
       query: (newUser) => ({
         url: `users`,
@@ -36,4 +40,4 @@ export const usersApi = apiSlice.injectEndpoints({
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetAllUsersQuery, useCreateUserMutation, useUpdateUserMutation, useDeleteUserMutation } = usersApi
+export const { useGetAllUsersQuery, useGetUserQuery, useCreateUserMutation, useUpdateUserMutation, useDeleteUserMutation } = usersApi

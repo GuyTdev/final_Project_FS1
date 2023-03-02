@@ -5,7 +5,7 @@ const router = express.Router();
 router.post('/subscriptions', subscriptionsWSController.addMovieToSubscription);
 router.get('/subscriptions', subscriptionsWSController.getSubscriptions);
 router.get('/subscriptions/:id', subscriptionsWSController.getSubscription);
-router.get('/subscriptions/:member_id', subscriptionsWSController.getSubscription);
+router.get('/subscriptions/bymember/:member_id', subscriptionsWSController.getSubscriptionByMemberId);
 router.delete('/subscriptions/:id', subscriptionsWSController.deleteSubscription);
 
 router.post('/members', subscriptionsWSController.createMember);

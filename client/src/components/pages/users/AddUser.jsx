@@ -13,9 +13,11 @@ import SaveIcon from "@mui/icons-material/Save";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { useState } from "react";
 import { useCreateUserMutation } from "../../../rtk/features/users/usersApiSlice";
+import { useNavigate } from "react-router-dom";
 
 const AddUser = () => {
-  const [createUser, { isLoading, isSuccess, isError, error }] =
+  const navigate = useNavigate();
+  const [createUser, { isSuccess, isError, error }] =
     useCreateUserMutation();
   const [user, setUser] = useState({
     firstName: "",
@@ -39,14 +41,21 @@ const AddUser = () => {
       });
     }
   };
-  const handleSave = (e) => {
+  const handleSave = async (e) => {
     console.log(user);
     if (user) {
-      createUser(user);
+      await createUser(user);
+      if(isSuccess) {
+        navigate('')
+      }else
+        if(isError){
+          console.log(error)
+        }
     }
   };
   const handleCancel = (e) => {
     console.log("canceled");
+    navigate('')
   };
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -60,7 +69,7 @@ const AddUser = () => {
   let areAllFieldsFilled = areUserDetailsFieldsFilled && areUserPermissionsFieldsFilled
 
   return (
-    <div>
+    <>
       <h3>Add User</h3>
       <Box
         sx={{
@@ -200,7 +209,7 @@ const AddUser = () => {
                 Cancel
               </Button>
             </Stack>
-    </div>
+    </>
   );
 };
 

@@ -1,3 +1,6 @@
+#movie_img{
+    max-height:200px;
+}
 .user_box{
     border: 1px solid;
     max-width: 300px;
@@ -20,6 +23,36 @@
 }
 .member_box{
     border: 1px solid;
+    max-width: 300px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    margin: 5px;
+    padding: 10px;
+    text-align: left;
+    font-family: arial;
+    color: rgb(120, 149, 204);
+}
+.subscriptions_watched_box{
+    border: 3px solid;
+    max-width: 300px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    margin: 5px;
+    padding: 10px;
+    text-align: left;
+    font-family: arial;
+    color: rgb(120, 149, 204);
+}
+.movies_watched_box{
+    border: 3px solid;
+    max-width: 300px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    margin: 5px;
+    padding: 10px;
+    text-align: left;
+    font-family: arial;
+    color: rgb(120, 149, 204);
+}
+.add_new_subscription_box{
+    border: 3px solid;
     max-width: 300px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     margin: 5px;

@@ -4,22 +4,22 @@ import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 import { useEffect, useState } from "react";
-import AllUsers from "./AllUsers";
-import AddUser from "./AddUser";
+import AllMovies from "./AllMovies";
+import AddMovie from "./AddMovie";
 import { useNavigate, useParams, useResolvedPath } from "react-router-dom";
-import EditUser from "./EditUser";
+import EditMovie from "./EditMovie";
 
-const UsersMenu = () => {
+const MoviesMenu = () => {
   const route= useResolvedPath()
   const {id} = useParams()
   const pages = [
-    { componentName: AllUsers, viewName: "All Users", routeName: "" },
-    { componentName: AddUser, viewName: "Add User", routeName: "adduser"}
+    { componentName: AllMovies, viewName: "All Movies", routeName: "" },
+    { componentName: AddMovie, viewName: "Add Movie", routeName: "addmovie"}
   ];
-  const [value, setValue] = useState(route.pathname ==='/api/users/adduser'?pages[1].viewName:pages[0].viewName);
+  const [value, setValue] = useState(route.pathname ==='/api/movies/addmovie'?pages[1].viewName:pages[0].viewName);
   const navigate = useNavigate();
   useEffect(() => {
-    setValue(route.pathname ==='/api/users/adduser'?pages[1].viewName: pages[0].viewName)
+    setValue(route.pathname ==='/api/movies/addmovie'?pages[1].viewName: pages[0].viewName)
   }, [route.pathname])
 
   
@@ -32,7 +32,7 @@ const UsersMenu = () => {
 
   return (
     <Box sx={{ width: "100%", typography: "body1" }}>
-    <h3>Users</h3>
+    <h3>Movies</h3>
       {!id?
       <TabContext value={value}>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
@@ -57,8 +57,8 @@ const UsersMenu = () => {
           </TabPanel>
         ))}
       </TabContext>
-      :<EditUser/>}
+      :<EditMovie/>}
     </Box>
   );
 };
-export default UsersMenu;
+export default MoviesMenu;

@@ -14,7 +14,7 @@ export const getSubscriptions = () => {
 }
 
 export const getSubscriptionByMemberId =  (member_id) => {
-   return axios.get(`${subscriptionsUri}/${member_id}`);
+   return axios.get(`${subscriptionsUri}/bymember/${member_id}`);
 }
 
 export const getSubscription =  (id) => {

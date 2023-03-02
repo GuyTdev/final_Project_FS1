@@ -36,7 +36,7 @@ Content-Type: application/json
 ###[Read] get users
 GET http://localhost:3000/api/users
 ###[Read] get user
-GET http://localhost:3000/api/users/63eddf5343b0770ef7911102
+GET http://localhost:3000/api/users/63fc6f05ff57c69b8bd0cd30
 ###[Create] Create new user with all permissions and details
 POST  http://localhost:3000/api/users
 Content-Type: application/json
@@ -138,6 +138,8 @@ Content-Type: application/json
 }
 ###[Read]
 GET http://localhost:3000/api/subscriptions_ws/subscriptions
+###[Read] byID
+GET http://localhost:3000/api/subscriptions_ws/subscriptions/bymember/63dbb352cebbacf220af72dc
 ###[Read] byID
 GET http://localhost:3000/api/subscriptions_ws/subscriptions/63dbee35d006ebabcca76f30
 

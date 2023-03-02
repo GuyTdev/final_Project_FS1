@@ -1,198 +1,165 @@
-// import { useState } from "react";
-// import {
-//   Box,
-//   IconButton,
-//   InputBase,
-//   Typography,
-//   Select,
-//   MenuItem,
-//   FormControl,
-//   useTheme,
-//   useMediaQuery,
-// } from "@mui/material";
-// import {
-//   Search,
-//   Message,
-//   DarkMode,
-//   LightMode,
-//   Notifications,
-//   Help,
-//   Menu,
-//   Close,
-// } from "@mui/icons-material";
-// import { useDispatch, useSelector } from "react-redux";
-// import { setMode, setLogout } from "state";
-// import { useNavigate } from "react-router-dom";
-// import FlexBetween from "components/FlexBetween";
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import Menu from '@mui/material/Menu';
+import MenuIcon from '@mui/icons-material/Menu';
+import Container from '@mui/material/Container';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import Tooltip from '@mui/material/Tooltip';
+import MenuItem from '@mui/material/MenuItem';
+import AdbIcon from '@mui/icons-material/Adb';
+import { Link } from 'react-router-dom';
+import { useState } from 'react';
 
-const Navbar = () => {
-    return(<>[APP LOGO-link to HomePage] <b>Navbar </b>[username][Login-btn CreateAccount-btn][user-icon]OR [Logout]</>);
-//   const [isMobileMenuToggled, setIsMobileMenuToggled] = useState(false);
-//   const dispatch = useDispatch();
-//   const navigate = useNavigate();
-//   const user = useSelector((state) => state.user);
-//   const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
+const pages = ['Users', 'Movies', 'Members'];
+const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-//   const theme = useTheme();
-//   const neutralLight = theme.palette.neutral.light;
-//   const dark = theme.palette.neutral.dark;
-//   const background = theme.palette.background.default;
-//   const primaryLight = theme.palette.primary.light;
-//   const alt = theme.palette.background.alt;
+function ResponsiveAppBar() {
+  const [anchorElNav, setAnchorElNav] = useState(null);
+  const [anchorElUser, setAnchorElUser] = useState(null);
 
-//   const fullName = `${user.firstName} ${user.lastName}`;
+  const handleOpenNavMenu = (event) => {
+    setAnchorElNav(event.currentTarget);
+  };
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget);
+  };
 
-//   return (
-//     <FlexBetween padding="1rem 6%" backgroundColor={alt}>
-//       <FlexBetween gap="1.75rem">
-//         <Typography
-//           fontWeight="bold"
-//           fontSize="clamp(1rem, 2rem, 2.25rem)"
-//           color="primary"
-//           onClick={() => navigate("/home")}
-//           sx={{
-//             "&:hover": {
-//               color: primaryLight,
-//               cursor: "pointer",
-//             },
-//           }}
-//         >
-//           Sociopedia
-//         </Typography>
-//         {isNonMobileScreens && (
-//           <FlexBetween
-//             backgroundColor={neutralLight}
-//             borderRadius="9px"
-//             gap="3rem"
-//             padding="0.1rem 1.5rem"
-//           >
-//             <InputBase placeholder="Search..." />
-//             <IconButton>
-//               <Search />
-//             </IconButton>
-//           </FlexBetween>
-//         )}
-//       </FlexBetween>
+  const handleCloseNavMenu = (e) => {
+    setAnchorElNav(null);
+  };
 
-//       {/* DESKTOP NAV */}
-//       {isNonMobileScreens ? (
-//         <FlexBetween gap="2rem">
-//           <IconButton onClick={() => dispatch(setMode())}>
-//             {theme.palette.mode === "dark" ? (
-//               <DarkMode sx={{ fontSize: "25px" }} />
-//             ) : (
-//               <LightMode sx={{ color: dark, fontSize: "25px" }} />
-//             )}
-//           </IconButton>
-//           <Message sx={{ fontSize: "25px" }} />
-//           <Notifications sx={{ fontSize: "25px" }} />
-//           <Help sx={{ fontSize: "25px" }} />
-//           <FormControl variant="standard" value={fullName}>
-//             <Select
-//               value={fullName}
-//               sx={{
-//                 backgroundColor: neutralLight,
-//                 width: "150px",
-//                 borderRadius: "0.25rem",
-//                 p: "0.25rem 1rem",
-//                 "& .MuiSvgIcon-root": {
-//                   pr: "0.25rem",
-//                   width: "3rem",
-//                 },
-//                 "& .MuiSelect-select:focus": {
-//                   backgroundColor: neutralLight,
-//                 },
-//               }}
-//               input={<InputBase />}
-//             >
-//               <MenuItem value={fullName}>
-//                 <Typography>{fullName}</Typography>
-//               </MenuItem>
-//               <MenuItem onClick={() => dispatch(setLogout())}>Log Out</MenuItem>
-//             </Select>
-//           </FormControl>
-//         </FlexBetween>
-//       ) : (
-//         <IconButton
-//           onClick={() => setIsMobileMenuToggled(!isMobileMenuToggled)}
-//         >
-//           <Menu />
-//         </IconButton>
-//       )}
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
+  };
 
-//       {/* MOBILE NAV */}
-//       {!isNonMobileScreens && isMobileMenuToggled && (
-//         <Box
-//           position="fixed"
-//           right="0"
-//           bottom="0"
-//           height="100%"
-//           zIndex="10"
-//           maxWidth="500px"
-//           minWidth="300px"
-//           backgroundColor={background}
-//         >
-//           {/* CLOSE ICON */}
-//           <Box display="flex" justifyContent="flex-end" p="1rem">
-//             <IconButton
-//               onClick={() => setIsMobileMenuToggled(!isMobileMenuToggled)}
-//             >
-//               <Close />
-//             </IconButton>
-//           </Box>
+  return (
+    <AppBar position="static">
+      <Container maxWidth="xl">
+        <Toolbar disableGutters>
+          <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+          <Typography
+            variant="h6"
+            noWrap
+            component="a"
+            href="/"
+            sx={{
+              mr: 2,
+              display: { xs: 'none', md: 'flex' },
+              fontFamily: 'monospace',
+              fontWeight: 700,
+              letterSpacing: '.3rem',
+              color: 'inherit',
+              textDecoration: 'none',
+            }}
+          >
+            MSM
+          </Typography>
 
-//           {/* MENU ITEMS */}
-//           <FlexBetween
-//             display="flex"
-//             flexDirection="column"
-//             justifyContent="center"
-//             alignItems="center"
-//             gap="3rem"
-//           >
-//             <IconButton
-//               onClick={() => dispatch(setMode())}
-//               sx={{ fontSize: "25px" }}
-//             >
-//               {theme.palette.mode === "dark" ? (
-//                 <DarkMode sx={{ fontSize: "25px" }} />
-//               ) : (
-//                 <LightMode sx={{ color: dark, fontSize: "25px" }} />
-//               )}
-//             </IconButton>
-//             <Message sx={{ fontSize: "25px" }} />
-//             <Notifications sx={{ fontSize: "25px" }} />
-//             <Help sx={{ fontSize: "25px" }} />
-//             <FormControl variant="standard" value={fullName}>
-//               <Select
-//                 value={fullName}
-//                 sx={{
-//                   backgroundColor: neutralLight,
-//                   width: "150px",
-//                   borderRadius: "0.25rem",
-//                   p: "0.25rem 1rem",
-//                   "& .MuiSvgIcon-root": {
-//                     pr: "0.25rem",
-//                     width: "3rem",
-//                   },
-//                   "& .MuiSelect-select:focus": {
-//                     backgroundColor: neutralLight,
-//                   },
-//                 }}
-//                 input={<InputBase />}
-//               >
-//                 <MenuItem value={fullName}>
-//                   <Typography>{fullName}</Typography>
-//                 </MenuItem>
-//                 <MenuItem onClick={() => dispatch(setLogout())}>
-//                   Log Out
-//                 </MenuItem>
-//               </Select>
-//             </FormControl>
-//           </FlexBetween>
-//         </Box>
-//       )}
-//     </FlexBetween>
-//   );
+          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+            <IconButton
+              size="large"
+              aria-label="account of current user"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              onClick={handleOpenNavMenu}
+              color="inherit"
+            >
+              <MenuIcon />
+            </IconButton>
+            <Menu
+              id="menu-appbar"
+              anchorEl={anchorElNav}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'left',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'left',
+              }}
+              open={Boolean(anchorElNav)}
+              onClose={handleCloseNavMenu}
+              sx={{
+                display: { xs: 'block', md: 'none' },
+              }}
+            >
+              {pages.map((page) => (
+                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                  <Typography textAlign="center">
+                  <Link style={{textDecoration:'none', color:'black'}} to={`api/${page.toLowerCase()}`}>{page}</Link>
+                  </Typography>
+                </MenuItem>
+              ))}
+            </Menu>
+          </Box>
+          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+          <Typography
+            variant="h5"
+            noWrap
+            component="a"
+            href=""
+            sx={{
+              mr: 2,
+              display: { xs: 'flex', md: 'none' },
+              flexGrow: 1,
+              fontFamily: 'monospace',
+              fontWeight: 700,
+              letterSpacing: '.3rem',
+              color: 'inherit',
+              textDecoration: 'none',
+            }}
+          >
+            LOGO
+          </Typography>
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+            {pages.map((page) => (
+              <Button
+                key={page}
+                onClick={handleCloseNavMenu}
+                sx={{ my: 2, color: 'yellow', display: 'block' }}
+              >
+                  <Link style={{textDecoration:'none', color:'white'}} to={`api/${page.toLowerCase()}`}>{page}</Link>
+              </Button>
+            ))}
+          </Box>
+
+          <Box sx={{ flexGrow: 0 }}>
+            <Tooltip title="Open settings">
+              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+              </IconButton>
+            </Tooltip>
+            <Menu
+              sx={{ mt: '45px' }}
+              id="menu-appbar"
+              anchorEl={anchorElUser}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              open={Boolean(anchorElUser)}
+              onClose={handleCloseUserMenu}
+            >
+              {settings.map((setting) => (
+                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                  <Typography textAlign="center">{setting}</Typography>
+                </MenuItem>
+              ))}
+            </Menu>
+          </Box>
+        </Toolbar>
+      </Container>
+    </AppBar>
+  );
 }
-
-export default Navbar;
+export default ResponsiveAppBar;

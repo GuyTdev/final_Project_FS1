@@ -1,6 +1,8 @@
 const SubscriptionsWatched = () => {
   return (
-    <div>SubscriptionsWatched</div>
+    <div className="subscriptions_watched_box">
+      SubscriptionsWatched
+    </div>
   )
 }
 

@@ -36,26 +36,26 @@ export const getSubscriptions = async (req, res) => {
         res.status(404).json({ message: error.message });
     }
 }
-/**Read get Subscription byMemberId*/
+/**Read get Subscription by MemberId*/
 
 export const getSubscriptionByMemberId = async (req, res) => {
     const { member_id: memberId } = req.params;
 
     try {
         const subscription = await Subscription.findOne({memberId});
-        if(!subscription) return res.json({message:'not found'})
+        if(!subscription) return res.status(404).json({message:'not found'})
         res.status(200).json(subscription)
     } catch (error) {
         res.status(409).json({ message: error.message });
     }
 }
-/**Read get Subscription byId*/
+/**Read get Movies by memberId*/
 
-export const getSubscriptionMovies = async (req, res) => {
-    const { id } = req.params;
+export const getMoviesArrayByMemberId = async (req, res) => {
+    const { member_id:memberId } = req.params;
 
     try {
-        const subscription = await Subscription.findById(id);
+        const subscription = await Subscription.findOne({memberId});
         res.status(200).json(subscription?.movies);
     } catch (error) {
         res.status(404).json({ message: error.message });

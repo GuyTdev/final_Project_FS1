@@ -39,13 +39,13 @@ Content-Type: application/json
 ###[Read]
 GET http://localhost:4000/api/movies
 ###[Read] byID
-GET http://localhost:4000/api/movies/63db7072044a15d672a8bda9
+GET http://localhost:4000/api/movies/63ff27e26d9ed0a499e4b7d6
 ###[Update]
-PATCH  http://localhost:4000/api/movies/63db7072044a15d672a8bda9
+PATCH  http://localhost:4000/api/movies/63ff27e26d9ed0a499e4b7d6
 Content-Type: application/json
 
 {
-    "premiered" : "2001"
+    "premiered" : "12-24-1997"
 }
 ###[Delete]
 DELETE  http://localhost:4000/api/movies/63e49b10ab82bc0e4d39c3ea
@@ -56,6 +56,15 @@ DELETE  http://localhost:4000/api/movies/63e49b10ab82bc0e4d39c3ea
 GET http://localhost:4000/api/members
 ###[Read] byID
 GET http://localhost:4000/api/members/63d8d9ac1a96bb63c4e78c16
+###[Update]
+POST  http://localhost:4000/api/members/
+Content-Type: application/json
+
+{
+    "name": "Elon Mask",
+    "email": "Elon@gmail.com",
+    "city": "Californaia"
+}
 ###[Update]
 PATCH  http://localhost:4000/api/members/63db61efb83fb61b400ce445
 Content-Type: application/json
@@ -84,8 +93,10 @@ Content-Type: application/json
 ###[Read]
 GET http://localhost:4000/api/subscriptions
 ###[Read] byID
-GET http://localhost:4000/api/subscriptions/63db65da757f4c0a95a78439
+GET http://localhost:4000/api/subscriptions/63dbb352cebbacf220af72dc
+###[Read] by Member ID
+GET http://localhost:4000/api/subscriptions/bymember/63dbb352cebbacf220af72dc
 
 ###[Delete]
-DELETE  http://localhost:4000/api/subscriptions/63dbdef66e5acbf3908bba9a
+DELETE  http://localhost:4000/api/subscriptions/63ece3e72cec98a892bb7e82
 ###
