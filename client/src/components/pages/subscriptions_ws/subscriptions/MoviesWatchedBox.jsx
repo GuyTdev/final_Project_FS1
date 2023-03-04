@@ -7,10 +7,10 @@ import AddMovieToSubscription from "./AddMovieToSubscription"
 const MoviesWatched = ({member_id}) => {
   const [showAddMovieToSubscriptionsBox, setShowAddMovieToSubscriptionsBox] = useState(false)
   const {data: subscription,isSuccess} =useGetSubscriptionByMemberIdQuery(member_id)
-  const {data:movies, isSuccess:isSucessMovies} = useGetAllMoviesQuery()
+  const {data:movies, isSuccess:isSuccessMovies} = useGetAllMoviesQuery()
   let memberSubscribedMoviesNamesAndDates=[]
   let memberMoviesIdsSubscribedArray=[]
-  if(isSuccess&& isSucessMovies){
+  if(isSuccess&& isSuccessMovies){
     console.log(subscription)
     memberMoviesIdsSubscribedArray= subscription?.movies.map(movie => movie.movieId)
     console.log("memberMoviesIdsSubscribedArray",memberMoviesIdsSubscribedArray)
@@ -32,8 +32,8 @@ const MoviesWatched = ({member_id}) => {
       </Button>
       {showAddMovieToSubscriptionsBox? <AddMovieToSubscription member_id={member_id} memberMoviesIdsSubscribedArray={[]} setShowAddMovieToSubscriptionsBox={setShowAddMovieToSubscriptionsBox}/> : null}
       <ul>
-      {memberSubscribedMoviesNamesAndDates?.map(movie=>
-              <li key={movie._id}>
+      {memberSubscribedMoviesNamesAndDates?.map((movie, index)=>
+              <li key={index}>
                 <div>
                 {movie.name}, {movie.date.slice(0,10)}
                 </div>

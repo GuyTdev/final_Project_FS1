@@ -12,7 +12,6 @@ import { useEffect, useState } from "react";
 import { useCreateMovieMutation } from "../../../../rtk/features/movies/moviesApiSlice";
 import { useNavigate } from "react-router-dom";
 import { MultipleSelectChip } from "./MultipleSelectChip";
-// import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import moment from "moment";
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';

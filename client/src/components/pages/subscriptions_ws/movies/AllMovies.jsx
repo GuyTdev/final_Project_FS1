@@ -10,7 +10,7 @@ import SubscriptionsWatchedBox from '../subscriptions/SubscriptionsWatchedBox';
 
 
 const Movies = () => {
-  const {data: movies, isLoading} = useGetAllMoviesQuery();
+  const {data: movies, isLoading,isFetching,isError, error} = useGetAllMoviesQuery();
   const [deleteMovie,{isSuccess}] = useDeleteMovieMutation()
   const [searchPhrase, setSearchPhrase] = useState("")
   const [filteredMovies, setFilteredMovies] = useState([])
@@ -44,6 +44,7 @@ const Movies = () => {
     <>
       {/* Show data related to movie. */}
       {/* All viewing and filtered data show will execute via rtk  . */}
+      {!isError?
       <TextField
       label="Movie Search"
         type="search"
@@ -58,11 +59,12 @@ const Movies = () => {
               </InputAdornment>
             )
         }}
-      /><br/><br/><br/>
-
-    {isLoading?
-        <div>Loading...</div>
-        : <Grid container  style={{ display: "flex", justifyContent: "center" }} sx={{gap:1}} spacing={{ xs: 2, md: 3 }} columns={{ xs: 3, sm: 10, md: 16, lg:18}}>
+        />
+    :null}
+<br/><br/><br/>
+    {isFetching?
+        <div>Fetching...</div>
+        : isLoading?<div>Loading...</div>:!isError?<Grid container  style={{ display: "flex", justifyContent: "center" }} sx={{gap:1}} spacing={{ xs: 2, md: 3 }} columns={{ xs: 3, sm: 10, md: 16, lg:18}}>
               {filteredMovies?.map(movie => <Grid className={"movie_box"}  item xs={2} sm={4} md={4} key={movie._id} >
                                             <p><b>{movie.name}, {movie.premiered.split('-').filter(el=>el.length===4)}</b></p>
                                             <b>Genres:</b> {movie.genres.toString().replaceAll(",",", ")}<br/>
@@ -80,7 +82,7 @@ const Movies = () => {
 
               )}
               </Grid>
-    }
+    :isError?<div>failed to load data</div>:<div>no movies to show</div>}
   </>
 )
 }

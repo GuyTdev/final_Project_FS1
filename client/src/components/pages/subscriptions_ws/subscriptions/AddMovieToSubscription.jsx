@@ -15,15 +15,25 @@ const AddMovieToSubscription = ({member_id, memberMoviesSubscribedArray, setShow
     let memberMovieList=[]
     console.log(isSuccess)
     if (isSuccess) {
-        const watchedMoviesIdsArray= memberMoviesSubscribedArray?.map((movie)=>movie.movieId)
-        memberMovieList = movies?.filter(movie => !watchedMoviesIdsArray?.includes(movie._id));
+        memberMovieList = movies?.filter(movie => {
+          console.log(movie._id);
+          console.log("memberMoviesSubscribedArray",memberMoviesSubscribedArray);
+          return !memberMoviesSubscribedArray?.includes(movie._id)
+        });
         console.log("memberMovieList",memberMovieList);
     }
     const handleChange =(e)=>{
         const{name, value} = e.target;
-        console.log("name",name);
-        console.log("value",value);
         setSelectedMovie({...selectedMovie, [name]:value})
+    }
+    const handleChangeMovie =(e,value)=>{
+      console.log("newValue in handle",value);
+
+      let index = movies?.findIndex(movie=>movie.name===value);
+      if(index!==-1){
+        console.log("movies[index].name",movies[index]._id)
+        setSelectedMovie({...selectedMovie,movieId: movies[index]._id})
+      }
     }
     const handleSubscribe = () =>{
         console.log(selectedMovie);
@@ -41,29 +51,15 @@ const AddMovieToSubscription = ({member_id, memberMoviesSubscribedArray, setShow
         {isLoading?<div>Loading...</div>:
         <Box sx={{ minWidth: 120 }}>
       <FormControl fullWidth sx={{ gap: 2 }}>
-        <InputLabel id="demo-simple-select-label" >Movie</InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={memberMovieList[0].name}
-          label="Movie"
-          name="movieId"
-          onChange={handleChange}
-        >
-            {memberMovieList?.map(movie =>
-                <MenuItem value={movie._id} key={movie._id}>{movie?.name}</MenuItem>
-            )}
-        </Select>
-        {/* <Autocomplete
-  disablePortal
+       
+        <Autocomplete
   id="combo-box-demo"
   options={memberMovieList.map(movie=>movie.name)}
-  name="movieId"
-  onChange={(newValue)=>{
-    setSelectedMovieName(newValue)}}
+  onChange={handleChangeMovie}
   sx={{ width: "auto" }}
-  renderInput={(params) => <TextField {...params} label="Select Movie" />}
-/> */}
+  renderInput={(params) => 
+  <TextField {...params} label="Select Movie" />}
+/>
         <LocalizationProvider sx={{ margin: 2 }}  dateAdapter={AdapterMoment}>
               <DatePicker
               disablePast
