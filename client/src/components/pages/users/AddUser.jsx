@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import SaveIcon from "@mui/icons-material/Save";
 import CancelIcon from "@mui/icons-material/Cancel";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useCreateUserMutation } from "../../../rtk/features/users/usersApiSlice";
 import { useNavigate } from "react-router-dom";
 
@@ -26,6 +26,10 @@ const AddUser = () => {
     sessionTimeout: "",
     permissions: [],
   });
+  useEffect(() => {
+    addObviousPermissions();
+  }, [user.permissions])
+  
   const handlePermissionChange = (e) => {
     const index = user.permissions.indexOf(e.target.value);
     if (index === -1) {
@@ -41,11 +45,27 @@ const AddUser = () => {
       });
     }
   };
+  const addObviousPermissions =()=>{
+    let needle1= ["Create Subscriptions", "Update Subscriptions", "Delete Subscriptions"]
+    if(needle1.some(i=>user.permissions?.includes(i)) && !user.permissions.includes("View Subscriptions")){
+      setUser({
+        ...user,
+        permissions: [...user.permissions, "View Subscriptions"]
+      });
+    }
+    let needle2= ["Create Movies", "Update Movies", "Delete Movies"]
+    if(needle2.some(i=>user.permissions?.includes(i)) && !user.permissions.includes("View Movies")){
+      setUser({
+        ...user,
+        permissions: [...user.permissions, "View Movies"]
+      });
+    }
+  }
   const handleSave = async (e) => {
     console.log(user);
     if (user) {
       await createUser(user);
-      if(!isError) 
+      if(!isError)
         navigate('')
       else
         console.log(error)
@@ -130,7 +150,7 @@ const AddUser = () => {
                 control={
                   <Checkbox
                     value="View Subscriptions"
-                    checked={user.permissions.includes("View Subscriptions")}
+                    checked={user.permissions?.includes("View Subscriptions")}
                     onChange={handlePermissionChange}
                   />
                 }
@@ -140,37 +160,37 @@ const AddUser = () => {
                 control={
                   <Checkbox
                     value="Create Subscriptions"
-                    checked={user.permissions.includes("Create Subscriptions")}
+                    checked={user.permissions?.includes("Create Subscriptions")}
                     onChange={handlePermissionChange}
                   />
                 }
-                label="Create Subscription"
+                label="Create Subscriptions"
               />
               <FormControlLabel
                 control={
                   <Checkbox
                     value="Update Subscriptions"
-                    checked={user.permissions.includes("Update Subscriptions")}
+                    checked={user.permissions?.includes("Update Subscriptions")}
                     onChange={handlePermissionChange}
                   />
                 }
-                label="Update Subscription"
+                label="Update Subscriptions"
               />
               <FormControlLabel
                 control={
                   <Checkbox
                     value="Delete Subscriptions"
-                    checked={user.permissions.includes("Delete Subscriptions")}
+                    checked={user.permissions?.includes("Delete Subscriptions")}
                     onChange={handlePermissionChange}
                   />
                 }
-                label="Delete subscriptions"
+                label="Delete Subscriptions"
               />
               <FormControlLabel
                 control={
                   <Checkbox
                     value="View Movies"
-                    checked={user.permissions.includes("View Movies")}
+                    checked={user.permissions?.includes("View Movies")}
                     onChange={handlePermissionChange}
                   />
                 }
@@ -180,31 +200,31 @@ const AddUser = () => {
                 control={
                   <Checkbox
                     value="Create Movies"
-                    checked={user.permissions.includes("Create Movies")}
+                    checked={user.permissions?.includes("Create Movies")}
                     onChange={handlePermissionChange}
                   />
                 }
-                label="Create Subscription"
+                label="Create Movies"
               />
               <FormControlLabel
                 control={
                   <Checkbox
                     value="Update Movies"
-                    checked={user.permissions.includes("Update Movies")}
+                    checked={user.permissions?.includes("Update Movies")}
                     onChange={handlePermissionChange}
                   />
                 }
-                label="Update Subscription"
+                label="Update Movies"
               />
               <FormControlLabel
                 control={
                   <Checkbox
                     value="Delete Movies"
-                    checked={user.permissions.includes("Delete Movies")}
+                    checked={user.permissions?.includes("Delete Movies")}
                     onChange={handlePermissionChange}
                   />
                 }
-                label="Delete movies"
+                label="Delete Movies"
               />
             </FormGroup>
           </FormControl>

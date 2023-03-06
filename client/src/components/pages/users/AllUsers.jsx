@@ -37,7 +37,7 @@ const Users = () => {
                                             <b>Username:</b> {user.username}<br/>
                                             <b>Session Timeout:</b> {user.sessionTimeout}<br/>
                                             <b>Created At:</b> {user.createdDate.slice(0,10)}<br/>
-                                            <b>Permissions:</b> {user.permissions.toString()}<br/>
+                                            <b>Permissions:</b> {user.permissions.toString().replaceAll(',',', ')}<br/>
                                             <Button variant="outlined" onClick={()=>handleDelete(user._id)} disabled={user.username.includes('admin')? true:false} startIcon={<DeleteIcon />}>
                                               Delete
                                             </Button>
