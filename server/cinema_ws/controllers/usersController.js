@@ -126,7 +126,7 @@ export const deleteUser = async (req, res) =>
             await jsonFilesUtils.deleteUserFromUsersDataJsonFile(id);
             return res.status(201).json(`user with id ${id} has been deleted !`)
         }
-        res.status(201).json(`user with id ${id} not exist !`)
+        res.status(404).json(`user with id ${id} not exist !`)
 
     }catch(error){
         console.log(error);

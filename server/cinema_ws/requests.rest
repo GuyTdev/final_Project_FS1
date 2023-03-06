@@ -84,16 +84,16 @@ GET http://localhost:3000/api/subscriptions_ws/members
 ###[Read] byID
 GET http://localhost:3000/api/subscriptions_ws/members/63edce782cec98a892bb7e9a
 ###[Update]
-PATCH  http://localhost:3000/api/subscriptions_ws/members/63edce782cec98a892bb7e9a
+PATCH  http://localhost:3000/api/subscriptions_ws/members/63ff62036d9ed0a499e4b836
 Content-Type: application/json
 
 {
-    "name": "Eylon Mask",
+    "name": "Eylon Mask 1",
     "email": "Eylon@gmail.com",
     "city": "Californaia"
 }
 ###[Delete]
-DELETE  http://localhost:3000/api/subscriptions_ws/members/63edce782cec98a892bb7e9a
+DELETE  http://localhost:3000/api/subscriptions_ws/members/64058702c8427be792440cf1
 ###
 
 ### Movies -#########################################################################################################
@@ -144,5 +144,11 @@ GET http://localhost:3000/api/subscriptions_ws/subscriptions/bymember/63dbb352ce
 GET http://localhost:3000/api/subscriptions_ws/subscriptions/63dbee35d006ebabcca76f30
 
 ###[Delete]
-DELETE  http://localhost:3000/api/subscriptions_ws/subscriptions/63dbee35d006ebabcca76f30
+DELETE  http://localhost:3000/api/subscriptions_ws/subscriptions/6405c4e46936535a9c7d1fb8
+###
+###[Delete] By Member Id
+DELETE  http://localhost:3000/api/subscriptions_ws/subscriptions/member/64059b07a6fb03aa87c5c144
+###
+###[Delete] Delete movie from all subscriptions by MovieId
+DELETE  http://localhost:3000/api/subscriptions_ws/subscriptions/movie/63dbb353cebbacf220af72e5
 ###

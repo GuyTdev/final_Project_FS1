@@ -60,6 +60,7 @@ const EditUser = () => {
   };
   const handleCancel = (e) => {
     console.log("canceled");
+    navigate('');
   };
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -149,6 +150,16 @@ const EditUser = () => {
               <FormControlLabel
                 control={
                   <Checkbox
+                    value="Create Subscriptions"
+                    checked={updatedUser?.permissions?.includes("Create Subscriptions")}
+                    onChange={handlePermissionChange}
+                  />
+                }
+                label="Create Subscriptions"
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
                     value="Update Subscriptions"
                     checked={updatedUser?.permissions?.includes("Update Subscriptions")}
                     onChange={handlePermissionChange}
@@ -175,6 +186,16 @@ const EditUser = () => {
                   />
                 }
                 label="View Movies"
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    value="Create Movies"
+                    checked={updatedUser?.permissions?.includes("Create Movies")}
+                    onChange={handlePermissionChange}
+                  />
+                }
+                label="Create Movies"
               />
               <FormControlLabel
                 control={

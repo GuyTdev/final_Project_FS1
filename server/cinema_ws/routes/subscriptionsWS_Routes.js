@@ -7,6 +7,8 @@ router.get('/subscriptions', subscriptionsWSController.getSubscriptions);
 router.get('/subscriptions/:id', subscriptionsWSController.getSubscription);
 router.get('/subscriptions/bymember/:member_id', subscriptionsWSController.getSubscriptionByMemberId);
 router.delete('/subscriptions/:id', subscriptionsWSController.deleteSubscription);
+router.delete('/subscriptions/member/:id', subscriptionsWSController.deleteSubscriptionByMemberId);
+router.delete('/subscriptions/movie/:id', subscriptionsWSController.deleteMovieFromAllSubscriptions);
 
 router.post('/members', subscriptionsWSController.createMember);
 router.get('/members', subscriptionsWSController.getMembers);

@@ -22,7 +22,7 @@ const EditMovie = () => {
   const navigate = useNavigate();
 
   const {data: movie, isLoading:isLoadingMovie, isFetching, isError:isErrorGetMovie} = useGetMovieQuery(id);
-  const [updateMovie, { isError, error }] = useUpdateMovieMutation();
+  const [updateMovie, { isSuccess,isError, error }] = useUpdateMovieMutation();
   const [updatedMovie, setUpdatedMovie] = useState({});
   const [genreName, setGenreName] = useState([]);
 
@@ -38,6 +38,15 @@ const EditMovie = () => {
   useEffect(() => {
     setUpdatedMovie({...updatedMovie, genres: genreName });
   }, [genreName])
+  useEffect(() => {
+    if(isError){
+      console.log(error);
+    }
+    if(isSuccess){
+      console.log(`successfully updated movie with id:${id}`);
+      navigate("");
+    }
+  }, [isSuccess,isError])
 
 
   const handleUpdate = async (e) => {
@@ -45,11 +54,6 @@ const EditMovie = () => {
       const dateISOStringFormat= moment(updatedMovie.premiered).format('L').replaceAll('/', '-')
       const newUpdatedMovie = {...updatedMovie, premiered: dateISOStringFormat, genres: genreName };
       await updateMovie(newUpdatedMovie);
-      if(!isError) {
-        navigate("");
-      }else{
-        alert("something went wrong");
-      }
     }
   }
   const handleCancel = (e) => {

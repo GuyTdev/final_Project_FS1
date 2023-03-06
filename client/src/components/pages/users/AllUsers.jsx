@@ -16,7 +16,7 @@ const Users = () => {
     if(window.confirm("Are you sure you want to delete this user?")){
       deleteUser(id)
     }
-    if(isSuccess())
+    if(isSuccess)
       console.log(`user with id :${id} has been deleted`)
 
   }

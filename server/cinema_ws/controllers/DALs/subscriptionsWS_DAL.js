@@ -24,6 +24,12 @@ export const getSubscription =  (id) => {
 export const deleteSubscription = (id) => {
    return axios.delete(`${subscriptionsUri}/${id}`)
 }
+export const deleteSubscriptionByMemberId = (id) => {
+   return axios.delete(`${subscriptionsUri}/member/${id}`)
+}
+export const deleteMovieFromAllSubscriptions = (id) => {
+   return axios.delete(`${subscriptionsUri}/movie/${id}`)
+}
 
 /** /movies **/
 export const createMovie =  (movieObj) => {

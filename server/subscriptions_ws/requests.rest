@@ -100,3 +100,9 @@ GET http://localhost:4000/api/subscriptions/bymember/63dbb352cebbacf220af72dc
 ###[Delete]
 DELETE  http://localhost:4000/api/subscriptions/63ece3e72cec98a892bb7e82
 ###
+###[Delete] By MemberId
+DELETE  http://localhost:4000/api/subscriptions/member/63dbb352cebbacf220af72d8
+###
+###[Delete] By movieId
+DELETE  http://localhost:4000/api/subscriptions//movie/63dbb353cebbacf220af72e5
+###

@@ -39,9 +39,23 @@ export const subscriptionsApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ['Subscriptions'],
     }),
+    deleteSubscriptionByMemberId: builder.mutation({
+      query: (id) => ({
+        url: `subscriptions_ws/subscriptions/member/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Subscriptions'],
+    }),
+    deleteMovieFromAllSubscriptions: builder.mutation({
+      query: (id) => ({
+        url: `subscriptions_ws/subscriptions/movie/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Subscriptions'],
+    }),
   }),
 })
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetAllSubscriptionsQuery, useGetSubscriptionQuery,useGetSubscriptionByMemberIdQuery, useCreateSubscriptionMutation, useUpdateSubscriptionMutation, useDeleteSubscriptionMutation } = subscriptionsApi
+export const { useGetAllSubscriptionsQuery, useGetSubscriptionQuery,useGetSubscriptionByMemberIdQuery, useCreateSubscriptionMutation, useUpdateSubscriptionMutation, useDeleteSubscriptionMutation, useDeleteSubscriptionByMemberIdMutation, useDeleteMovieFromAllSubscriptionsMutation } = subscriptionsApi

@@ -45,12 +45,12 @@ const AddUser = () => {
     console.log(user);
     if (user) {
       await createUser(user);
-      if(isSuccess) {
+      if(!isError) 
         navigate('')
-      }else
-        if(isError){
-          console.log(error)
-        }
+      else
+        console.log(error)
+
+      console.log("isSuccess add user", isSuccess);
     }
   };
   const handleCancel = (e) => {
@@ -69,7 +69,7 @@ const AddUser = () => {
   let areAllFieldsFilled = areUserDetailsFieldsFilled && areUserPermissionsFieldsFilled
 
   return (
-    <>
+    <div className="form_box">
       <h3>Add User</h3>
       <Box
         sx={{
@@ -149,6 +149,16 @@ const AddUser = () => {
               <FormControlLabel
                 control={
                   <Checkbox
+                    value="Update Subscriptions"
+                    checked={user.permissions.includes("Update Subscriptions")}
+                    onChange={handlePermissionChange}
+                  />
+                }
+                label="Update Subscription"
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
                     value="Delete Subscriptions"
                     checked={user.permissions.includes("Delete Subscriptions")}
                     onChange={handlePermissionChange}
@@ -175,6 +185,16 @@ const AddUser = () => {
                   />
                 }
                 label="Create Subscription"
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    value="Update Movies"
+                    checked={user.permissions.includes("Update Movies")}
+                    onChange={handlePermissionChange}
+                  />
+                }
+                label="Update Subscription"
               />
               <FormControlLabel
                 control={
@@ -209,7 +229,7 @@ const AddUser = () => {
                 Cancel
               </Button>
             </Stack>
-    </>
+    </div>
   );
 };
 

@@ -90,5 +90,37 @@ export const deleteSubscription = async (req, res) => {
         res.status(409).json({ message: error.message });
     }
 }
+/**Delete Subscription by MemberId */
+export const deleteSubscriptionByMemberId = async (req, res) => {
+    try{
+        const { id: memberId } = req.params;
+        const resp = await Subscription.findOneAndRemove({memberId});
+        if(resp){
+            res.status(200).json({message: `Subscription with memberId :${resp._id} deleted successfully`} );
+        }else{
+            res.send({ message:`No Subscription with memberId: ${id}`})
+        }
+    } catch (error) {
+        res.status(409).json({ message: error.message });
+    }
+}
+/**Delete movieId from all Subscriptions by movieId */
+export const deleteMovieFromAllSubscriptions = async (req, res) => {
+    try{
+        const { id: movieId } = req.params;
+        const subscriptions = await Subscription.find();
+        console.log(subscriptions);
+        if(subscriptions){
+            await Promise.all(subscriptions.map(async (subscription) => {
+                await Subscription.findByIdAndUpdate(subscription._id, {movies: subscription.movies.filter(movie => movie.movieId.toString()!== movieId)})
+            }))
+            res.status(200).json({message: `Movies with movie id ${movieId} deleted from all subscriptions successfully`} );
+        }else{
+            res.send({ message:`No Subscription with memberId: ${movieId}`})
+        }
+    } catch (error) {
+        res.status(409).json({ message: error.message });
+    }
+}
 
 

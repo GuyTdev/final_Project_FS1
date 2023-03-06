@@ -22,19 +22,25 @@ const EditMember = () => {
     city: "",
   });
   const {data: member, isLoading, isError:isErrorGetMember} = useGetMemberQuery(id);
-  const [updateMember, { isError, error }] =
+  const [updateMember, { isSuccess, isError, error }] =
   useUpdateMemberMutation();
   useEffect(() => {
     if(member){
       setUpdatedMember(member);
     }
   }, [member])
-  const handleUpdate = () => {
+  useEffect(() => {
+    if(isError){
+      console.log(error);
+    }
+    if(isSuccess){
+      console.log(`successfully updated member with id:${id}`);
+      navigate("");
+    }
+  }, [isSuccess,isError])
+  const handleUpdate = async() => {
     if (updatedMember) {
-       updateMember(updatedMember);
-      if(!isError) {
-        navigate("");
-      }else console.log(error);
+       await updateMember(updatedMember);
     }
   }
   const handleCancel = (e) => {
@@ -52,7 +58,7 @@ const EditMember = () => {
 
   return (
     <>
-    {isLoading?<div>Loading...</div>:
+    {isErrorGetMember?null:isLoading?<div>Loading...</div>:
     <div>
       <h3>Edit Member</h3>
       <Box

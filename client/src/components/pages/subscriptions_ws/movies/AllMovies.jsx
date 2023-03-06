@@ -7,11 +7,13 @@ import { Button, Grid, IconButton, InputAdornment, TextField } from "@mui/materi
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SubscriptionsWatchedBox from '../subscriptions/SubscriptionsWatchedBox';
+import { useDeleteMovieFromAllSubscriptionsMutation } from '../../../../rtk/features/subscriptions/subscriptionsApiSlice';
 
 
 const Movies = () => {
   const {data: movies, isLoading,isFetching,isError, error} = useGetAllMoviesQuery();
-  const [deleteMovie,{isSuccess}] = useDeleteMovieMutation()
+  const [deleteMovie,{isSuccess,isError:isErrorDeleting, error:errorDelete}] = useDeleteMovieMutation()
+  const [deleteMovieFromAllSubscriptions,{isSuccess:isSuccessDeleteMovieFromAllSubscriptions,isError:isErrorDeleteMovieFromAllSubscriptions, error:errorDeleteMovieFromAllSubscriptions}] = useDeleteMovieFromAllSubscriptionsMutation()
   const [searchPhrase, setSearchPhrase] = useState("")
   const [filteredMovies, setFilteredMovies] = useState([])
   const navigate= useNavigate();
@@ -25,13 +27,29 @@ const Movies = () => {
       if(searchPhrase.length>0)
       setFilteredMovies(movies.filter(movie=>movie.name.toLowerCase().includes(searchPhrase.toLowerCase())))
   }, [movies,searchPhrase])//change filtered moviesList any time search phrase is changed.
-  const handleDelete = (id) =>{
+  useEffect(() => {
+    if(isSuccess && isSuccessDeleteMovieFromAllSubscriptions){
+      navigate("")
+      console.log(`movie deleted successfully`);
+     }
+     if(isErrorDeleting||isErrorDeleteMovieFromAllSubscriptions){
+      if(isErrorDeleting){
+        console.log(`error while deleting data: ${errorDelete}`);
+      }
+      if(isErrorDeleteMovieFromAllSubscriptions){
+        console.log(`error while deleting data: ${errorDeleteMovieFromAllSubscriptions}`);
+      }
+     }
+     if(isError){
+      console.log(`error while fetching data: ${error}`);
+     }
+  }, [isSuccess,isErrorDeleting,isError,isErrorDeleteMovieFromAllSubscriptions,isSuccessDeleteMovieFromAllSubscriptions])
+  
+  const handleDelete = async(id) =>{
 
     if(window.confirm("Are you sure you want to delete this movie?")){
-      deleteMovie(id)
-    }
-    if(isSuccess){
-     navigate("")
+      await deleteMovie(id)
+      await deleteMovieFromAllSubscriptions(id);
     }
   }
   const handleEdit = (id) =>{
@@ -76,10 +94,8 @@ const Movies = () => {
                                             <Button variant="outlined" onClick={()=>handleEdit(movie._id)} startIcon={<EditIcon />}>
                                               Edit
                                             </Button>
-                                            <SubscriptionsWatchedBox/>
+                                            <SubscriptionsWatchedBox movieId={movie._id}/>
                                         </Grid>
-
-
               )}
               </Grid>
     :isError?<div>failed to load data</div>:<div>no movies to show</div>}

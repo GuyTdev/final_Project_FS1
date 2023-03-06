@@ -16,11 +16,12 @@ import moment from "moment";
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import '../../../styles.css'
 
 const AddMovie = () => {
   const navigate = useNavigate();
 
-  const [createMovie, { isError, error }] =
+  const [createMovie, { isSuccess, isError, error }] =
   useCreateMovieMutation();
   const [movie, setMovie] = useState({
     name: "",
@@ -32,6 +33,15 @@ const AddMovie = () => {
   useEffect(() => {
     setMovie({...movie, genres: genreName });
   }, [genreName])
+  useEffect(() => {
+    if(isError){
+      console.log(error);
+    }
+    if(isSuccess){
+      console.log(`successfully create movie ${movie.name}`);
+      navigate("");
+    }
+  }, [isSuccess,isError])
 
   const handleSave = async (e) => {
     if (movie) {
@@ -39,10 +49,6 @@ const AddMovie = () => {
       const newMovie = {...movie, premiered: dateISOStringFormat };
       console.log(newMovie);
       await createMovie(newMovie);
-      if(!isError) {
-        navigate("");
-      }else
-        console.log(error);
     }
   }
   const handleCancel = (e) => {
@@ -77,7 +83,7 @@ const AddMovie = () => {
           <TextField
             sx={{ margin: 2 }}
             required
-            id="outlined-required"
+            id="outlined-required myTextField"
             label="Movie Title"
             name="name"
             placeholder="Titanic"
@@ -95,8 +101,8 @@ const AddMovie = () => {
             onChange={handleChange}
             defaultValue=""
           />
-          <MultipleSelectChip genreName={genreName} setGenreName={setGenreName} />
-          <LocalizationProvider  dateAdapter={AdapterMoment}>
+          <MultipleSelectChip  genreName={genreName} setGenreName={setGenreName} /><br/><br/>
+          <LocalizationProvider dateAdapter={AdapterMoment}>
               <DatePicker
               disableFuture
               label="Premiered"

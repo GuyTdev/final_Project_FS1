@@ -36,9 +36,10 @@
     max-width: 300px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     margin: 5px;
-    padding: 10px;
+    padding: 5px;
     text-align: left;
     font-family: arial;
+    font-size: smaller;
     color: rgb(120, 149, 204);
 }
 .movies_watched_box{

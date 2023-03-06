@@ -54,8 +54,7 @@ export const updateMember = async (req, res) => {
             new:true
           })
         if(updatedMemberResp)
-             return res.json({success:true, message:'updated'})
-        res.json({success:false, message:'member doesn\'t exist'})
+             return res.status(200).json({success:true, message:'updated'})
     } catch (error) {
         res.status(409).json({ message: error.message });
     }

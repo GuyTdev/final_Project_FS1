@@ -1,49 +1,66 @@
-import { Button } from "@mui/material"
-import { useState } from "react"
-import { useGetAllMoviesQuery } from "../../../../rtk/features/movies/moviesApiSlice"
-import {  useGetSubscriptionByMemberIdQuery } from "../../../../rtk/features/subscriptions/subscriptionsApiSlice"
-import AddMovieToSubscription from "./AddMovieToSubscription"
+import { Button } from "@mui/material";
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { useGetAllMoviesQuery } from "../../../../rtk/features/movies/moviesApiSlice";
+import { useGetSubscriptionByMemberIdQuery } from "../../../../rtk/features/subscriptions/subscriptionsApiSlice";
+import AddMovieToSubscription from "./AddMovieToSubscription";
 
-const MoviesWatched = ({member_id}) => {
-  const [showAddMovieToSubscriptionsBox, setShowAddMovieToSubscriptionsBox] = useState(false)
-  const {data: subscription,isSuccess} =useGetSubscriptionByMemberIdQuery(member_id)
-  const {data:movies, isSuccess:isSuccessMovies} = useGetAllMoviesQuery()
-  let memberSubscribedMoviesNamesAndDates=[]
-  let memberMoviesIdsSubscribedArray=[]
-  if(isSuccess&& isSuccessMovies){
-    console.log(subscription)
-    memberMoviesIdsSubscribedArray= subscription?.movies.map(movie => movie.movieId)
-    console.log("memberMoviesIdsSubscribedArray",memberMoviesIdsSubscribedArray)
-    memberSubscribedMoviesNamesAndDates =subscription.movies.map(movieObj => {
-      let movie_index = movies?.findIndex(movie => movie._id === movieObj.movieId)
-      if(movie_index!== -1){
-        return {name:movies[movie_index].name, date: movieObj.date}
+const MoviesWatched = ({ member_id }) => {
+  const [showAddMovieToSubscriptionsBox, setShowAddMovieToSubscriptionsBox] =
+    useState(false);
+  const { data: subscription, isSuccess } =
+    useGetSubscriptionByMemberIdQuery(member_id);
+  const { data: movies, isSuccess: isSuccessMovies } = useGetAllMoviesQuery();
+  let memberSubscribedMoviesNamesAndDates = [];
+  let memberMoviesIdsSubscribedArray = [];
+  if (isSuccess && isSuccessMovies) {
+    memberMoviesIdsSubscribedArray = subscription?.movies.map(
+      (movie) => movie.movieId
+    );
+    memberSubscribedMoviesNamesAndDates = subscription.movies.map(
+      (movieObj) => {
+        let movie_index = movies?.findIndex(
+          (movie) => movie._id === movieObj.movieId
+        );
+        if (movie_index !== -1) {
+          return { movieId:movies[movie_index]._id , name: movies[movie_index].name, date: movieObj.date };
+        }
+        return movieObj;
       }
-      return movieObj
-    })
-    console.log("memberSubscribedMoviesNamesAndDates",memberSubscribedMoviesNamesAndDates)
+    );
   }
-  
   return (
     <div className="movies_watched_box">
-      <b>MoviesWatched</b>
-      <Button sx={{margin:2}} variant="contained" onClick={()=>{setShowAddMovieToSubscriptionsBox(!showAddMovieToSubscriptionsBox)}}>
-          Subscribe to new movie
+      <b>Movies Watched</b>
+      <Button
+        sx={{ margin: 2, textTransform: "none" }}
+        variant="contained"
+        onClick={() => {
+          setShowAddMovieToSubscriptionsBox(!showAddMovieToSubscriptionsBox);
+        }}
+      >
+        {showAddMovieToSubscriptionsBox
+          ? "Hide Subscribe area"
+          : "Subscribe to new movie"}
       </Button>
-      {showAddMovieToSubscriptionsBox? <AddMovieToSubscription member_id={member_id} memberMoviesIdsSubscribedArray={[]} setShowAddMovieToSubscriptionsBox={setShowAddMovieToSubscriptionsBox}/> : null}
+      {showAddMovieToSubscriptionsBox ? (
+        <AddMovieToSubscription
+          member_id={member_id}
+          memberMoviesIdsSubscribedArray={memberMoviesIdsSubscribedArray}
+          setShowAddMovieToSubscriptionsBox={setShowAddMovieToSubscriptionsBox}
+        />
+      ) : null}
       <ul>
-      {memberSubscribedMoviesNamesAndDates?.map((movie, index)=>
-              <li key={index}>
-                <div>
-                {movie.name}, {movie.date.slice(0,10)}
-                </div>
-              </li>
-      
-      )}
-
+        {memberSubscribedMoviesNamesAndDates?.map((movie, index) => (
+          <li key={index}>
+            <div>
+              <Link to={`../movies/${movie.movieId}`}> {movie.name} </Link>, {movie.date.slice(0, 10)}
+            </div>
+          </li>
+        ))}
       </ul>
-      </div>
-  )
-}
+    </div>
+  );
+};
 
-export default MoviesWatched
+export default MoviesWatched;

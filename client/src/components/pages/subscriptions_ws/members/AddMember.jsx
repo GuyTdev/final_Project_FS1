@@ -15,21 +15,26 @@ import { useNavigate } from "react-router-dom";
 const AddMember = () => {
   const navigate = useNavigate();
 
-  const [createMember, { isError, error }] = useCreateMemberMutation();
+  const [createMember, { isSuccess, isError, error }] = useCreateMemberMutation();
   const [member, setMember] = useState({
     name: "",
     email: [],
     city: "",
   });
+  useEffect(() => {
+    if(isError){
+      console.log(error);
+    }
+    if(isSuccess){
+      console.log(`successfully create member ${member.name}`);
+      navigate("");
+    }
+  }, [isSuccess, isError])
 
   const handleSave = async (e) => {
     if (member) {
       console.log("member",member);
       await createMember(member);
-      if(!isError) {
-        navigate("");
-      }else
-        console.log(error);
     }
   }
   const handleCancel = (e) => {

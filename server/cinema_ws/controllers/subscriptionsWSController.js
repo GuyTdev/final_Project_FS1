@@ -70,6 +70,32 @@ export const deleteSubscription = async (req, res) => {
         res.send(error.message)
     }
 }
+// @description Delete a subscription by id
+// @route DELETE /subscriptions/:id
+// @access Private
+/**Delete Subscription */
+export const deleteSubscriptionByMemberId = async (req, res) => {
+    const {id} = req.params;
+    try {
+        const {data: deleteResp} = await subscriptionsWS_DAL.deleteSubscriptionByMemberId(id);
+        res.send(deleteResp);
+    } catch (error) {
+        res.send(error.message)
+    }
+}
+// @description Delete a subscription by id
+// @route DELETE /subscriptions/:id
+// @access Private
+/**Delete Subscription */
+export const deleteMovieFromAllSubscriptions = async (req, res) => {
+    const {id} = req.params;
+    try {
+        const {data: deleteResp} = await subscriptionsWS_DAL.deleteMovieFromAllSubscriptions(id);
+        res.send(deleteResp);
+    } catch (error) {
+        res.send(error.message)
+    }
+}
 
 /**     subscriptions/movies     **/
 // @description Create new movie

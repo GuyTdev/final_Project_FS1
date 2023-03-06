@@ -8,5 +8,7 @@ router.get('/:id', subscriptionsBL.getSubscription);
 router.get('/bymember/:member_id', subscriptionsBL.getSubscriptionByMemberId);
 // router.get('/:member_id', subscriptionsBL.getMoviesArrayByMemberId);
 router.delete('/:id', subscriptionsBL.deleteSubscription);
+router.delete('/member/:id', subscriptionsBL.deleteSubscriptionByMemberId);
+router.delete('/movie/:id', subscriptionsBL.deleteMovieFromAllSubscriptions);
 
 export default router;
