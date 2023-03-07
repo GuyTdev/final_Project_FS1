@@ -1,7 +1,7 @@
 body, html {
   place-items: center;
-  background-image: url('./assets/empty-seats-auditorium-movie.jpg');
-  background-repeat: no-repeat;
-  background-size: cover;
+  background-image: linear-gradient(rgba(255,255,255,0.15), rgba(255,255,255,0.15)), url('./assets/empty-seats-auditorium-movie.jpg');
+  background-repeat: repeat-y;
+  background-size: contain ;
   font-family: Arial, Helvetica, sans-serif;
 }

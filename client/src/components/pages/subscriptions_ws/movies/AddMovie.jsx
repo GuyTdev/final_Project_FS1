@@ -124,6 +124,7 @@ const AddMovie = () => {
         sx={{
           display: "flex",
           justifyContent: "center",
+          margin: 2,
         }}
         direction="row"
         spacing={2}

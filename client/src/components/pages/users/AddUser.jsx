@@ -8,6 +8,7 @@ import {
   FormLabel,
   Stack,
   TextField,
+  Typography,
 } from "@mui/material";
 import SaveIcon from "@mui/icons-material/Save";
 import CancelIcon from "@mui/icons-material/Cancel";
@@ -93,7 +94,7 @@ const AddUser = () => {
       <h3>Add User</h3>
       <Box
         sx={{
-          display: "flex",
+          display: "flex-center",
           justifyContent: "center",
         }}
       >
@@ -154,7 +155,7 @@ const AddUser = () => {
                     onChange={handlePermissionChange}
                   />
                 }
-                label="View Subscriptions"
+                label={<Typography variant="h6" >View Subscriptions</Typography>}
               />
               <FormControlLabel
                 control={
@@ -194,7 +195,7 @@ const AddUser = () => {
                     onChange={handlePermissionChange}
                   />
                 }
-                label="View Movies"
+                label={<Typography variant="h6" >View Movies</Typography>}
               />
               <FormControlLabel
                 control={
@@ -232,6 +233,7 @@ const AddUser = () => {
             <Stack sx={{
           display: "flex",
           justifyContent: "center",
+          margin: 2,
         }} direction="row" spacing={2}>
               <Button
                 onClick={handleSave}

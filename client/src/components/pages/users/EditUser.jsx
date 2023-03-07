@@ -8,6 +8,7 @@ import {
   FormLabel,
   Stack,
   TextField,
+  Typography,
 } from "@mui/material";
 import UpdateIcon from "@mui/icons-material/Update";
 import CancelIcon from "@mui/icons-material/Cancel";
@@ -33,7 +34,25 @@ const EditUser = () => {
       setUpdatedUser(user);
     }
   }, [user])
-
+  useEffect(() => {
+    addObviousPermissions();
+  }, [updatedUser.permissions])
+ const addObviousPermissions =()=>{
+    let needle1= ["Create Subscriptions", "Update Subscriptions", "Delete Subscriptions"]
+    if(needle1.some(i=>updatedUser.permissions?.includes(i)) && !updatedUser.permissions.includes("View Subscriptions")){
+      setUpdatedUser({
+        ...updatedUser,
+        permissions: [...updatedUser.permissions, "View Subscriptions"]
+      });
+    }
+    let needle2= ["Create Movies", "Update Movies", "Delete Movies"]
+    if(needle2.some(i=>updatedUser.permissions?.includes(i)) && !updatedUser.permissions.includes("View Movies")){
+      setUpdatedUser({
+        ...updatedUser,
+        permissions: [...updatedUser.permissions, "View Movies"]
+      });
+    }
+  }
   const handlePermissionChange = (e) => {
     const index = updatedUser.permissions.indexOf(e.target.value);
     if (index === -1) {
@@ -145,7 +164,8 @@ const EditUser = () => {
                     onChange={handlePermissionChange}
                   />
                 }
-                label="View Subscriptions"
+                
+                label={<Typography variant="h6" >View Subscriptions</Typography>}
               />
               <FormControlLabel
                 control={
@@ -165,7 +185,7 @@ const EditUser = () => {
                     onChange={handlePermissionChange}
                   />
                 }
-                label="Update Subscription"
+                label="Update Subscriptions"
               />
               <FormControlLabel
                 control={
@@ -175,7 +195,7 @@ const EditUser = () => {
                     onChange={handlePermissionChange}
                   />
                 }
-                label="Delete subscriptions"
+                label="Delete Subscriptions"
               />
               <FormControlLabel
                 control={
@@ -185,7 +205,7 @@ const EditUser = () => {
                     onChange={handlePermissionChange}
                   />
                 }
-                label="View Movies"
+                label={<Typography variant="h6" >View Movies</Typography>}
               />
               <FormControlLabel
                 control={
@@ -205,7 +225,7 @@ const EditUser = () => {
                     onChange={handlePermissionChange}
                   />
                 }
-                label="Update Subscription"
+                label="Update Movies"
               />
               <FormControlLabel
                 control={
@@ -215,7 +235,7 @@ const EditUser = () => {
                     onChange={handlePermissionChange}
                   />
                 }
-                label="Delete movies"
+                label="Delete Movies"
               />
             </FormGroup>
           </FormControl>
@@ -223,6 +243,7 @@ const EditUser = () => {
             <Stack sx={{
               display: "flex",
               justifyContent: "center",
+              margin: 2,
             }} direction="row" spacing={2}>
               <Button
                 onClick={handleUpdate}
