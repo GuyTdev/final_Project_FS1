@@ -2,7 +2,7 @@ import '../../../styles.css'
 import { useDeleteMemberMutation, useGetAllMembersQuery } from '../../../../rtk/features/members/membersApiSlice';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import { Button } from "@mui/material"
+import { Button, Grid } from "@mui/material"
 import { useNavigate } from 'react-router-dom';
 import MoviesWatchedBox from '../subscriptions/MoviesWatchedBox';
 import { useEffect } from 'react';
@@ -49,9 +49,10 @@ const Members = () => {
     <>
       {/* Show data related to member. */}
       {/* All viewing and filtered data show will execute via rtk  . */}
-    {isError?<div>an error accured while fetching members</div>:isLoading?
+    {isError?<div>an error occurred while fetching members</div>:isLoading?
         <div>Loading...</div>
-        : members?.map(member => <div key={member._id} className={"member_box"}>
+        :!isError?<Grid container  style={{ display: "flex", justifyContent: "center" }} sx={{gap:1}} spacing={{ xs: 2, md: 3 }} columns={{ xs: 3, sm: 10, md: 13, lg:15}}>
+         {members?.map(member => <Grid className={"member_box"}  item xs={2} sm={4} md={4} key={member._id} >
                                             <p><b>{member.name}</b></p>
                                             <b>Email:</b> {member.email}<br/>
                                             <b>City:</b> {member.city}<br/>
@@ -67,9 +68,11 @@ const Members = () => {
                                             :null}
 
                                             <MoviesWatchedBox member_id={member._id}/>
-                                        </div>
+                                        </Grid>
 
     )}
+    </Grid>:isError?<div>failed to load data</div>:<div>no members to show</div>}
+
   </>
 )
 }

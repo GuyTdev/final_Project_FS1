@@ -12,8 +12,7 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { Link } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useState } from 'react';
 
 // let pages = ['Users', 'Movies', 'Members'];
 const settings = ['Dashboard', 'Logout'];
@@ -35,10 +34,6 @@ function ResponsiveAppBar({pages}) {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
-  };
-
-  const handleSettingClick = (setting) => {
-    console.log(setting);
   };
 
   return (
@@ -157,7 +152,7 @@ function ResponsiveAppBar({pages}) {
             >
               {settings.map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center" ><Link style={{textDecoration:'none'}} to={(setting==='Dashboard')?`/api`:`/auth/${setting.toLowerCase()}`}>{setting}</Link></Typography>
+                  <Typography textAlign="center" ><Link style={{textDecoration:'none', color:"black"}} to={(setting==='Dashboard')?`/api`:`/auth/${setting.toLowerCase()}`}>{setting}</Link></Typography>
                 </MenuItem>
               ))}
             </Menu>

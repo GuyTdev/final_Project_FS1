@@ -37,7 +37,7 @@ return (
       <h3>subscriptions watched</h3>
       <ul>
           {membersListOfMovie?.map(member => <li key={member.name}>
-            {permissions?.includes('Update Subscriptions')?<Link to={`../members/${member.memberId}`}>{member.name}</Link>:member.name}, {member.date.slice(0,10)}
+            {permissions?.includes('Update Subscriptions')?<Link style={{color:'rgb(150,205,223)'}} to={`../members/${member.memberId}`}>{member.name}</Link>:member.name}, {member.date.slice(0,10)}
         </li>)}
       </ul>
     </div>

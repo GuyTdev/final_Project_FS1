@@ -105,6 +105,7 @@ const AddMovie = () => {
           <LocalizationProvider dateAdapter={AdapterMoment}>
               <DatePicker
               disableFuture
+              disableMaskedInput
               label="Premiered"
               name="premiered"
               openTo="year"

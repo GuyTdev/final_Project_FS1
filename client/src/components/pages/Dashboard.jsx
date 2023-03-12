@@ -26,7 +26,7 @@ import LoggedInUser from "./LoggedInUser";
       {authToken?
       <>
         <Navbar pages={pages}/>
-        <h3>loggedIn as {loggedInUser.username}</h3>
+        <h3>loggedIn as {loggedInUser?.username?.split('@')[0]}</h3>
         <LoggedInUser id={loggedInUser.id}/>
         <Outlet/>
       </>

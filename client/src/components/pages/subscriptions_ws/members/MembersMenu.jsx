@@ -26,8 +26,6 @@ const MembersMenu = () => {
 
   
   const handleChange = (event, newValue) => {
-    console.log("event.target.name",event.target.name);
-    console.log(event.target.value);
     setValue(newValue);
     navigate(`${event.target.name}`)
   };

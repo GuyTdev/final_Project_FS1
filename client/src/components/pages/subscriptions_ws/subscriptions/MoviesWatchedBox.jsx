@@ -56,7 +56,7 @@ const MoviesWatched = ({ member_id }) => {
         {memberSubscribedMoviesNamesAndDates?.map((movie, index) => (
           <li key={index}>
             <div>
-              {permissions.includes("Update Movies")?<Link to={`../movies/${movie.movieId}`}> {movie.name} </Link>:movie.name}, {movie.date.slice(0, 10)}
+              {permissions.includes("Update Movies")?<Link style={{color:'rgb(150,205,223)'}} to={`../movies/${movie.movieId}`}> {movie.name} </Link>:movie.name}, {movie.date.slice(0, 10)}
             </div>
           </li>
         ))}
