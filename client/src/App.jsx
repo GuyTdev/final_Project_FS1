@@ -1,6 +1,5 @@
 import './App.css';
 import { Route, Routes, useNavigate} from 'react-router-dom'
-import Navbar from './components/layout/Navbar'
 import HomePage from './components/pages/HomePage';
 import Login from './components/pages/auth/Login'
 import CreateAccount from './components/pages/auth/CreateAccount'
@@ -17,18 +16,17 @@ import MembersMenu from './components/pages/subscriptions_ws/members/MembersMenu
 import AddMember from './components/pages/subscriptions_ws/members/AddMember';
 import AllMembers from './components/pages/subscriptions_ws/members/AllMembers';
 import EditMember from './components/pages/subscriptions_ws/members/EditMember';
+import Logout from './components/pages/auth/Logout';
 
 const  App = () => {
-  const navigate = useNavigate();
   return (
     <>
-    <Navbar/>
     <div className="App">
-        <h1 className='app_title' onClick={()=>navigate('/api/movies')}>{document.title}</h1>
         <Routes>
         {/* public routes */}
-          <Route path='/' element={<HomePage />}>
+          <Route path='' element={<HomePage />}>
             <Route path='auth/login' element={<Login />}/>
+            <Route path='auth/logout' element={<Logout />}/>
             <Route path='auth/create_account' element={<CreateAccount />}/>
           </Route>
           {/* private registered admin only routes */}

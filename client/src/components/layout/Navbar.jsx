@@ -12,12 +12,13 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 
-const pages = ['Users', 'Movies', 'Members'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+// let pages = ['Users', 'Movies', 'Members'];
+const settings = ['Dashboard', 'Logout'];
 
-function ResponsiveAppBar() {
+function ResponsiveAppBar({pages}) {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
 
@@ -34,6 +35,10 @@ function ResponsiveAppBar() {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+  };
+
+  const handleSettingClick = (setting) => {
+    console.log(setting);
   };
 
   return (
@@ -91,7 +96,7 @@ function ResponsiveAppBar() {
               {pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
                   <Typography textAlign="center">
-                  <Link style={{textDecoration:'none', color:'black'}} to={`api/${page.toLowerCase()}`}>{page}</Link>
+                  <Link style={{textDecoration:'none', color:'black'}} to={`${page.toLowerCase()}`}>{page}</Link>
                   </Typography>
                 </MenuItem>
               ))}
@@ -123,7 +128,7 @@ function ResponsiveAppBar() {
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'yellow', display: 'block' }}
               >
-                  <Link style={{textDecoration:'none', color:'white'}} to={`api/${page.toLowerCase()}`}>{page}</Link>
+                  <Link style={{textDecoration:'none', color:'white'}} to={`${page.toLowerCase()}`}>{page}</Link>
               </Button>
             ))}
           </Box>
@@ -152,7 +157,7 @@ function ResponsiveAppBar() {
             >
               {settings.map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+                  <Typography textAlign="center" ><Link style={{textDecoration:'none'}} to={(setting==='Dashboard')?`/api`:`/auth/${setting.toLowerCase()}`}>{setting}</Link></Typography>
                 </MenuItem>
               ))}
             </Menu>

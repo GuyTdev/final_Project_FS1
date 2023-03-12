@@ -30,7 +30,15 @@ const AddUser = () => {
   useEffect(() => {
     addObviousPermissions();
   }, [user.permissions])
-  
+  useEffect(() => {
+    if(isError){
+      console.log(error);
+    }
+    if(isSuccess){
+      console.log(`successfully create user ${user.username}`);
+      navigate("");
+    }
+  }, [isSuccess,isError])
   const handlePermissionChange = (e) => {
     const index = user.permissions.indexOf(e.target.value);
     if (index === -1) {
@@ -66,12 +74,6 @@ const AddUser = () => {
     console.log(user);
     if (user) {
       await createUser(user);
-      if(!isError)
-        navigate('')
-      else
-        console.log(error)
-
-      console.log("isSuccess add user", isSuccess);
     }
   };
   const handleCancel = (e) => {

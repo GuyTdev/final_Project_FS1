@@ -8,7 +8,7 @@ dotenv.config();
 // @route POST /movies
 // @access Private
 /**Create POST */
-/* REGISTER USER */
+/* CREATE USER -->only for updating passwords of users that are already in db (created by admin with initial password) */
 export const updatePassword = async (req, res) => {
   try {
     const {username, password} = req.body;
@@ -20,6 +20,9 @@ export const updatePassword = async (req, res) => {
     console.log("modifiedCount:",modifiedCount );
     if(modifiedCount===1)
       res.status(200).json({message: "password updated!" });
+      else{
+        res.status(400).json({message: "password not updated!" })
+      }
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -31,10 +34,10 @@ export const login = async (req, res) => {
       const { username, password } = req.body;
       const user = await User.findOne({ username });
       if (!user) return res.status(400).json({ msg: "User does not exist. " });
-  
+
       const isMatch = await bcrypt.compare(password, user.password);
       if (!isMatch) return res.status(400).json({ msg: "Invalid credentials. " });
-  
+
       const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
       delete user.password;
       res.status(200).json({ token, user });

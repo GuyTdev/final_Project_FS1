@@ -79,6 +79,7 @@ const AddMovieToSubscription = ({ member_id, memberMoviesIdsSubscribedArray, set
                 openTo="day"
                 inputFormat="YYYY MMM DD"
                 views={["year", "month", "day"]}
+                disableMaskedInput
                 value={selectedMovie.date}
                 onChange={(newValue) => {
                   setSelectedMovie({ ...selectedMovie, date: newValue });

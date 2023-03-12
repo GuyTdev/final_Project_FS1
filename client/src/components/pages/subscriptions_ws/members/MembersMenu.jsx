@@ -8,14 +8,16 @@ import AllMembers from "./AllMembers";
 import AddMember from "./AddMember";
 import { useNavigate, useParams, useResolvedPath } from "react-router-dom";
 import EditMember from "./EditMember";
+import { useSelector } from "react-redux";
 
 const MembersMenu = () => {
   const route= useResolvedPath()
   const {id} = useParams()
-  const pages = [
+  const {permissions} = useSelector(state=>state.user.userDetails)
+  const pages = permissions?.includes("Create Subscriptions")?[
     { componentName: AllMembers, viewName: "All Members", routeName: "" },
     { componentName: AddMember, viewName: "Add Member", routeName: "addmember"}
-  ];
+  ]:[{ componentName: AllMembers, viewName: "All Members", routeName: "" }];
   const [value, setValue] = useState(route.pathname ==='/api/members/addmember'?pages[1].viewName:pages[0].viewName);
   const navigate = useNavigate();
   useEffect(() => {

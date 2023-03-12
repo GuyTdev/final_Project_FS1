@@ -7,9 +7,11 @@ import { useNavigate } from 'react-router-dom';
 import MoviesWatchedBox from '../subscriptions/MoviesWatchedBox';
 import { useEffect } from 'react';
 import { useDeleteSubscriptionByMemberIdMutation } from '../../../../rtk/features/subscriptions/subscriptionsApiSlice';
+import { useSelector } from 'react-redux';
 
 const Members = () => {
   const navigate = useNavigate();
+  const {permissions} = useSelector(state=>state.user.userDetails)
   const {data: members, isLoading,isError,error} = useGetAllMembersQuery()
   const [deleteMember,{isSuccess,isError:isErrorDeleting, error:errorDelete}]  = useDeleteMemberMutation()
   const [deleteSubscriptionByMemberIdMutation,{isSuccess:isSuccessDeleteSubscriptionByMemberId,isError:isErrorDeleteSubscriptionByMemberId, error:errorDeleteSubscriptionByMemberId}] = useDeleteSubscriptionByMemberIdMutation()
@@ -53,12 +55,17 @@ const Members = () => {
                                             <p><b>{member.name}</b></p>
                                             <b>Email:</b> {member.email}<br/>
                                             <b>City:</b> {member.city}<br/>
-                                            <Button style={{margin:"5px"}} variant="outlined" onClick={()=>handleDelete(member._id)} startIcon={<DeleteIcon />}>
-                                              Delete
-                                            </Button>
+                                            {permissions?.includes("Update Subscriptions")?
                                             <Button style={{margin:"5px"}} variant="outlined" onClick={()=>handleEdit(member._id)} startIcon={<EditIcon />}>
                                               Edit
                                             </Button>
+                                            :null}
+                                            {permissions?.includes("Delete Subscriptions")?
+                                            <Button style={{margin:"5px"}} variant="outlined" onClick={()=>handleDelete(member._id)} startIcon={<DeleteIcon />}>
+                                              Delete
+                                            </Button>
+                                            :null}
+
                                             <MoviesWatchedBox member_id={member._id}/>
                                         </div>
 

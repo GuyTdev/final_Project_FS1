@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SubscriptionsWatchedBox from '../subscriptions/SubscriptionsWatchedBox';
 import { useDeleteMovieFromAllSubscriptionsMutation } from '../../../../rtk/features/subscriptions/subscriptionsApiSlice';
+import { useSelector } from 'react-redux';
 
 
 const Movies = () => {
@@ -16,6 +17,7 @@ const Movies = () => {
   const [deleteMovieFromAllSubscriptions,{isSuccess:isSuccessDeleteMovieFromAllSubscriptions,isError:isErrorDeleteMovieFromAllSubscriptions, error:errorDeleteMovieFromAllSubscriptions}] = useDeleteMovieFromAllSubscriptionsMutation()
   const [searchPhrase, setSearchPhrase] = useState("")
   const [filteredMovies, setFilteredMovies] = useState([])
+  const {permissions} = useSelector(state=>state.user.userDetails)
   const navigate= useNavigate();
   useEffect(() => {
     if(movies?.length > 0)
@@ -88,12 +90,16 @@ const Movies = () => {
                                             <b>Genres:</b> {movie.genres.toString().replaceAll(",",", ")}<br/>
                                             <img id="movie_img" style={{padding:"5px"}} src={`${movie.image}`} alt={movie.name} /><br/>
                                             <b>Premiered</b> {movie.premiered}<br/>
-                                            <Button variant="outlined" onClick={()=>handleDelete(movie._id)} startIcon={<DeleteIcon />}>
-                                              Delete
-                                            </Button>
-                                            <Button variant="outlined" onClick={()=>handleEdit(movie._id)} startIcon={<EditIcon />}>
+                                            {permissions?.includes("Update Movies")?
+                                            <Button sx={{margin:1}} variant="outlined" onClick={()=>handleEdit(movie._id)} startIcon={<EditIcon />}>
                                               Edit
                                             </Button>
+                                            :null}
+                                            {permissions?.includes("Delete Movies")?
+                                            <Button sx={{margin:1}} variant="outlined" onClick={()=>handleDelete(movie._id)} startIcon={<DeleteIcon />}>
+                                              Delete
+                                            </Button>
+                                            :null}
                                             <SubscriptionsWatchedBox movieId={movie._id}/>
                                         </Grid>
               )}

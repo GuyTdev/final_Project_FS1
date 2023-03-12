@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { useGetAllMembersQuery } from "../../../../rtk/features/members/membersApiSlice";
 import { useGetAllSubscriptionsQuery } from "../../../../rtk/features/subscriptions/subscriptionsApiSlice";
@@ -7,6 +8,8 @@ const SubscriptionsWatched = ({movieId}) => {
   const {data:allMembers} = useGetAllMembersQuery();
   const { data: subscriptionsArray } = useGetAllSubscriptionsQuery()
   const [membersListOfMovie, setMembersListOfMovie] = useState(null)
+  const {permissions} = useSelector(state=>state.user.userDetails)
+
 
   useEffect(() => {
       let tmp_membersListOfMovie = [];
@@ -27,10 +30,6 @@ const SubscriptionsWatched = ({movieId}) => {
     const member = allMembers?.find(member => member._id === memberId)
     return member.name
   }
-  const isAllowed =()=>{
-    //if admin return true
-    return true;
-  }
 return (
   <div className="subscriptions_watched_box">
     {membersListOfMovie?
@@ -38,7 +37,7 @@ return (
       <h3>subscriptions watched</h3>
       <ul>
           {membersListOfMovie?.map(member => <li key={member.name}>
-            <Link to={`../members/${member.memberId}`}>{member.name}</Link>, {member.date.slice(0,10)}
+            {permissions?.includes('Update Subscriptions')?<Link to={`../members/${member.memberId}`}>{member.name}</Link>:member.name}, {member.date.slice(0,10)}
         </li>)}
       </ul>
     </div>

@@ -8,21 +8,22 @@ import AllMovies from "./AllMovies";
 import AddMovie from "./AddMovie";
 import { useNavigate, useParams, useResolvedPath } from "react-router-dom";
 import EditMovie from "./EditMovie";
+import { useSelector } from "react-redux";
 
 const MoviesMenu = () => {
   const route= useResolvedPath()
   const {id} = useParams()
-  const pages = [
+  const {permissions} = useSelector(state=>state.user.userDetails)
+  const pages = permissions?.includes("Create Movies")?[
     { componentName: AllMovies, viewName: "All Movies", routeName: "" },
     { componentName: AddMovie, viewName: "Add Movie", routeName: "addmovie"}
-  ];
+  ]:[{ componentName: AllMovies, viewName: "All Movies", routeName: "" }];
   const [value, setValue] = useState(route.pathname ==='/api/movies/addmovie'?pages[1].viewName:pages[0].viewName);
   const navigate = useNavigate();
   useEffect(() => {
     setValue(route.pathname ==='/api/movies/addmovie'?pages[1].viewName: pages[0].viewName)
   }, [route.pathname])
 
-  
   const handleChange = (event, newValue) => {
     console.log("event.target.name",event.target.name);
     console.log(event.target.value);
