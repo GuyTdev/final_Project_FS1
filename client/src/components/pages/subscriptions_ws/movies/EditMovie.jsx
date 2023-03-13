@@ -44,7 +44,7 @@ const EditMovie = () => {
     }
     if(isSuccess){
       console.log(`successfully updated movie with id:${id}`);
-      navigate("");
+      navigate("../");
     }
   }, [isSuccess,isError])
 

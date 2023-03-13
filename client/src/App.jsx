@@ -36,6 +36,7 @@ const  App = () => {
                 <Route path='adduser' element={<AddUser/>} />
                 <Route path=':id' element={<EditUser/>}/>
               </Route>
+              {/* private registered admin and managers only routes */}
               <Route path='movies' element={<MoviesMenu/>}>
                 <Route path='' element={<AllMovies/>} />
                 <Route path='addmovie' element={<AddMovie/>} />

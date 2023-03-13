@@ -14,15 +14,19 @@ const MembersMenu = () => {
   const route= useResolvedPath()
   const {id} = useParams()
   const {permissions} = useSelector(state=>state.user.userDetails)
-  const pages = permissions?.includes("Create Subscriptions")?[
+  let pages = [
     { componentName: AllMembers, viewName: "All Members", routeName: "" },
     { componentName: AddMember, viewName: "Add Member", routeName: "addmember"}
-  ]:[{ componentName: AllMembers, viewName: "All Members", routeName: "" }];
+  ]
   const [value, setValue] = useState(route.pathname ==='/api/members/addmember'?pages[1].viewName:pages[0].viewName);
   const navigate = useNavigate();
   useEffect(() => {
     setValue(route.pathname ==='/api/members/addmember'?pages[1].viewName: pages[0].viewName)
   }, [route.pathname])
+  useEffect(() => {
+    if(permissions?.includes(" Create Subscriptions"))
+      pages=[{ componentName: AllMembers, viewName: "All Members", routeName: "" }]
+  }, [permissions])
 
   
   const handleChange = (event, newValue) => {
@@ -34,8 +38,8 @@ const MembersMenu = () => {
     <Box sx={{ width: "100%", typography: "body1" }}>
     <h3>Members</h3>
       {!id?
-      <TabContext value={value}>
-        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+      <TabContext value={value} >
+        <Box sx={{ borderBottom: 1, borderColor: "divider", margin:2}}>
           <TabList
             onChange={handleChange}
             centered

@@ -7,7 +7,7 @@ const HomePage = () => {
   const handleTitleClick =()=>{
     let authToken = sessionStorage.getItem('Auth Token')
     if(authToken){
-      navigate('api/movies')
+      navigate('api')
     }else{
       navigate('/auth/login')
     }
