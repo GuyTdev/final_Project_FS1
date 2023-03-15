@@ -9,13 +9,12 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput } from '@mui/material';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { useState } from 'react';
 import { useLoginUserMutation } from '../../../rtk/features/auth/authSlice';
-import { useGetUserQuery } from '../../../rtk/features/users/usersApiSlice';
 import { useDispatch } from 'react-redux';
 import { setUserRoleAsAdmin } from '../../../rtk/features/users/userSlice';
 
@@ -36,6 +35,7 @@ const theme = createTheme();
 
 export default function Login() {
   const [showPassword, setShowPassword ] = useState(false)
+  const [firstTimeFlag, setFirstTimeFlag ] = useState(true)//indicates whether the user is first time logging in
   const [loginUser]=useLoginUserMutation()
   const navigate = useNavigate()
   const dispatch = useDispatch();
@@ -48,25 +48,31 @@ export default function Login() {
   const handleSubmit = async(event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    
+    setFirstTimeFlag(true);
     let username= data.get('username')
     let password= data.get('password')
-    console.log("username,password:",username,password);
     const {data:loginResp,isError,error}=await loginUser({username,password})
-    console.log("loginResp",loginResp);
-    // const {data:userFellDetails}= await getUser(loginResp.user._id)
-    console.log("user id to send for rtk=>",loginResp?.user?._id);
-    if(loginResp){
-      sessionStorage.setItem('userId', loginResp?.user?._id)
-      sessionStorage.setItem('Auth Token', loginResp?.user?.token)
-      sessionStorage.setItem('username', loginResp?.user?.username)
-      if (loginResp?.user?._id === '63fc6f05ff57c69b8bd0cd30') {//id of the only admin
-        dispatch(setUserRoleAsAdmin())//turn rtk role as admin
-      }
-      navigate('/api')
+    if(isError){
+      alert(error)
     }else{
-      alert('wrong username or password\n please check your credentials!\n Note: If you didn\'t create an account yet, please navigate to Create Account')
+      if(loginResp){
+        sessionStorage.setItem('userId', loginResp?.user?._id)
+        sessionStorage.setItem('Auth Token', loginResp?.user?.token)
+        sessionStorage.setItem('username', loginResp?.user?.username)
+        if(firstTimeFlag){
+          sessionStorage.setItem('firstTimeFlag', true)
+          sessionStorage.setItem('autoLogoutTime',"")
+        }else{
+          setFirstTimeFlag(false)
+        }
+        if (loginResp?.user?._id === '63fc6f05ff57c69b8bd0cd30') {//id of the only admin
+          dispatch(setUserRoleAsAdmin())//turn rtk role as admin
+        }
+        navigate('/api')
+      }else{
+        alert('wrong username or password\n please check your credentials!\n Note: If you didn\'t create an account yet, please navigate to Create Account')
       }
+    }
 
     }
 

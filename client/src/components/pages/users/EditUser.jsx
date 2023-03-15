@@ -69,7 +69,6 @@ const EditUser = () => {
     }
   };
   const handleUpdate = (e) => {
-    console.log(updatedUser);
     if (updatedUser) {
       updateUser(updatedUser);
     }
@@ -78,7 +77,6 @@ const EditUser = () => {
     }
   };
   const handleCancel = (e) => {
-    console.log("canceled");
     navigate('');
   };
   const handleChange = (e) => {

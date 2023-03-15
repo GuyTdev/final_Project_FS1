@@ -32,18 +32,17 @@ const Movies = () => {
   useEffect(() => {
     if(isSuccess && isSuccessDeleteMovieFromAllSubscriptions){
       navigate("")
-      console.log(`movie deleted successfully`);
      }
      if(isErrorDeleting||isErrorDeleteMovieFromAllSubscriptions){
       if(isErrorDeleting){
-        console.log(`error while deleting data: ${errorDelete}`);
+        alert(`error while deleting data: ${errorDelete}`);
       }
       if(isErrorDeleteMovieFromAllSubscriptions){
-        console.log(`error while deleting data: ${errorDeleteMovieFromAllSubscriptions}`);
+        alert(`error while deleting data: ${errorDeleteMovieFromAllSubscriptions}`);
       }
      }
      if(isError){
-      console.log(`error while fetching data: ${error}`);
+      alert(`error while fetching data: ${error}`);
      }
   }, [isSuccess,isErrorDeleting,isError,isErrorDeleteMovieFromAllSubscriptions,isSuccessDeleteMovieFromAllSubscriptions])
   
@@ -55,7 +54,6 @@ const Movies = () => {
     }
   }
   const handleEdit = (id) =>{
-    console.log(`navigate to EditMoviePage details with id: ${id}`)
     if(id){
       navigate(`${id}`)
     }
@@ -88,7 +86,7 @@ const Movies = () => {
               {filteredMovies?.map(movie => <Grid className={"movie_box"}  item xs={2} sm={4} md={4} key={movie._id} >
                                             <p><b>{movie.name}, {movie.premiered.split('-').filter(el=>el.length===4)}</b></p>
                                             <b>Genres:</b> {movie.genres.toString().replaceAll(",",", ")}<br/>
-                                            <img id="movie_img" style={{padding:"5px"}} src={`${movie.image}`} alt={movie.name} /><br/>
+                                            <img id="movie_img" style={{padding:"5px",maxWidth:"200px"}} src={`${movie.image}`} alt={movie.name} /><br/>
                                             <b>Premiered</b> {movie.premiered}<br/>
                                             {permissions?.includes("Update Movies")?
                                             <Button sx={{margin:1}} variant="outlined" onClick={()=>handleEdit(movie._id)} startIcon={<EditIcon />}>

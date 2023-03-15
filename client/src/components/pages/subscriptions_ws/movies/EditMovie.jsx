@@ -28,8 +28,6 @@ const EditMovie = () => {
 
   useEffect(() => {
     if(movie){
-      console.log("old Details", movie);
-      console.log("premiered object details", moment(movie.premiered.replaceAll('-', '/')));
       const momentObjMovieDate = moment(movie.premiered.replaceAll('-', '/'));
       setUpdatedMovie({...movie,premiered: momentObjMovieDate});
       setGenreName(movie?.genres);
@@ -43,8 +41,7 @@ const EditMovie = () => {
       console.log(error);
     }
     if(isSuccess){
-      console.log(`successfully updated movie with id:${id}`);
-      navigate("../");
+      navigate("");
     }
   }, [isSuccess,isError])
 
@@ -57,13 +54,10 @@ const EditMovie = () => {
     }
   }
   const handleCancel = (e) => {
-    console.log("canceled");
     navigate("");
   };
   const handleChange = (e) => {
-    console.log(updatedMovie)
     const { name, value } = e.target;
-    console.log("genreName",genreName);
     setUpdatedMovie({ ...updatedMovie, [name]: value });
   };
   let areAllFieldsFilled =

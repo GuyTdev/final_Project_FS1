@@ -35,7 +35,6 @@ const AddUser = () => {
       console.log(error);
     }
     if(isSuccess){
-      console.log(`successfully create user ${user.username}`);
       navigate("");
     }
   }, [isSuccess,isError])
@@ -71,13 +70,11 @@ const AddUser = () => {
     }
   }
   const handleSave = async (e) => {
-    console.log(user);
     if (user) {
       await createUser(user);
     }
   };
   const handleCancel = (e) => {
-    console.log("canceled");
     navigate('')
   };
   const handleChange = (e) => {

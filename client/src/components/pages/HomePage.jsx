@@ -9,6 +9,7 @@ const HomePage = () => {
     if(authToken){
       navigate('api')
     }else{
+      alert('Please Login First')
       navigate('/auth/login')
     }
   }

@@ -48,9 +48,7 @@ export default function CreateAccount() {
     
     let username= data.get('username')
     let password= data.get('password')
-    console.log("username,password:",username,password);
     const createUserResp = await createUserPassword({username,password})
-    console.log("createUserResp",createUserResp);
     if(createUserResp?.error){
       alert("could not update password!")
     }else{

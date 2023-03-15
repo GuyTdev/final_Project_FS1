@@ -1,50 +1,63 @@
 import { IconButton, Tooltip } from "@mui/material"
 import FactCheckIcon from '@mui/icons-material/FactCheck';
 import AccessTimeFilledIcon from '@mui/icons-material/AccessTimeFilled';
-import {useDispatch, useSelector} from 'react-redux'
+import HourglassTopIcon from '@mui/icons-material/HourglassTop';
+import {useDispatch} from 'react-redux'
 import { useGetUserQuery } from "../../rtk/features/users/usersApiSlice";
-import { calculateLogoutTime, setMongoDbFetchedUser, setUserNavbarPages, setUserRoleAsAdmin } from "../../rtk/features/users/userSlice";
-import { useEffect } from "react";
+import { setMongoDbFetchedUser, setUserNavbarPages, setUserRoleAsAdmin } from "../../rtk/features/users/userSlice";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import moment from "moment";
 
 
 const LoggedInUser = ({id}) => {
     const dispatch = useDispatch();
     const navigate = useNavigate(); 
     const { data: userDetails, isLoading,isSuccess, isError, error } = useGetUserQuery(id);
-    const autoLogoutTime = useSelector(state => state.user.autoLogoutTime);
+    const [counter, setCounter] = useState(null);
     useEffect(() => {
-      if(isSuccess &&userDetails.sessionTimeout)
+      if(isSuccess && userDetails.sessionTimeout){
         setUserStoreFetchedDetails()
+      }
+      if(sessionStorage.getItem("autoLogoutTime") !== '')
+        setCounter(moment(sessionStorage.getItem("autoLogoutTime")).diff(Date.now(), 's'))
     }, [isSuccess, userDetails])
+      // Handle logout
+    useEffect(() => {
+      const timer =
+        counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
+        if(moment(Date.now()).isSameOrAfter(moment(sessionStorage.getItem("autoLogoutTime"))))
+          navigate('/auth/logout')
+      return () => clearInterval(timer);
+    }, [counter]);
 
     const setUserStoreFetchedDetails = ()=>{
       dispatch(setMongoDbFetchedUser(userDetails))//store all current loggedIn user details in redux store
-      dispatch(calculateLogoutTime(userDetails?.sessionTimeout))//calculate logout time
       //set time for auto logout
-      handleLogoutTimer(userDetails?.sessionTimeout);//logout after sessionsTimeout Minutes
-      console.log("userDetails?.username",userDetails?.username);
+      if(sessionStorage.getItem("firstTimeFlag") === 'true'){
+        calculateLogoutTime(userDetails?.sessionTimeout)//calculate logout time and store to sessionStorage
+        setCounter(userDetails?.sessionTimeout*60);//logout after sessionsTimeout Minutes
+        sessionStorage.setItem('firstTimeFlag', false)
+      }
       if(userDetails?.username.includes("admin")) {
         dispatch(setUserRoleAsAdmin())
       }
       dispatch(setUserNavbarPages())
     }
-    // this function sets the timer that logs out the user after 10 secs
-let timer;
-const handleLogoutTimer = (sessionTimeout) => {
-  timer = setTimeout(() => {
-    // clears any pending timer.
-    resetTimer();
-    // Listener clean up. Removes the existing event listener from the window
-    // logs out user
-    navigate('/auth/logout');
-  }, sessionTimeout * 60 * 1000); // sessionTimeout in minutes * 60(to sec)*1000(to ms).
-};
+    const calculateLogoutTime = (sessionsTimeoutInMinutes) => {
+      let timezoneOffset = new Date().getTimezoneOffset() * 60000;
+      let calculatedTime = new Date(Date.now() - timezoneOffset + sessionsTimeoutInMinutes * 60000);
+      // let calculatedTime = moment(Date.now() + action.payload * 60000);
+      sessionStorage.setItem('autoLogoutTime', calculatedTime.toISOString().slice(0,-1))
+    }
+    const handlePressHourglassButton = () => {
+      if(sessionStorage.getItem("autoLogoutTime") !== '')
+        setCounter(moment(sessionStorage.getItem("autoLogoutTime")).diff(Date.now(), 's'))
+    }
 
-// this resets the timer if it exists.
-const resetTimer = () => {
-  if (timer) clearTimeout(timer);
-};
+
+
+
   return (
     <>
     {isLoading?<div>Loading...</div>:isError?<div>Error: {error.message}</div>:
@@ -56,9 +69,17 @@ const resetTimer = () => {
       </Tooltip>
        <Tooltip title={!userDetails? "Session Timeout (Minutes)": 
                         `Session Timeout: ${userDetails?.sessionTimeout} Minutes,
-                          You will be logged out automatically at :${autoLogoutTime ? autoLogoutTime: 'not calculated yet'}`} >
+                          You will be logged out automatically at :${sessionStorage.getItem("autoLogoutTime") ? moment(sessionStorage.getItem("autoLogoutTime")).format('DD MMM YYYY HH:mm:ss'): 'not calculated yet'}`} >
       <IconButton>
         <AccessTimeFilledIcon />
+      </IconButton>
+      </Tooltip>
+       <Tooltip title={counter? `${Math.floor(counter/60)} Minutes and ${counter %60} Seconds left to auto logout`
+                              :sessionStorage.getItem("autoLogoutTime")?
+                              `You will be logged out ${moment(sessionStorage.getItem("autoLogoutTime")).fromNow()}`
+                              :null} >
+      <IconButton onClick={handlePressHourglassButton}>
+        <HourglassTopIcon />
       </IconButton>
       </Tooltip>
     </>

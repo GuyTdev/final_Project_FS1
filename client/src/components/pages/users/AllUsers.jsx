@@ -21,7 +21,6 @@ const Users = () => {
 
   }
   const handleEdit = (id) =>{
-    console.log(`navigate to EditUserPage details with id: ${id}`)
     if(id){
       navigate(`${id}`)
     }

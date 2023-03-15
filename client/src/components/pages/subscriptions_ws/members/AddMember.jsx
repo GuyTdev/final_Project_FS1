@@ -26,19 +26,16 @@ const AddMember = () => {
       console.log(error);
     }
     if(isSuccess){
-      console.log(`successfully create member ${member.name}`);
       navigate("");
     }
   }, [isSuccess, isError])
 
   const handleSave = async (e) => {
     if (member) {
-      console.log("member",member);
       await createMember(member);
     }
   }
   const handleCancel = (e) => {
-    console.log("canceled");
     navigate("");
   };
   const handleChange = (e) => {
@@ -69,9 +66,9 @@ const AddMember = () => {
             sx={{ margin: 2 }}
             required
             id="outlined-required"
-            label="Member Name"
+            label="Member Full Name"
             name="name"
-            placeholder="Member name"
+            placeholder="Jane Doe"
             onChange={handleChange}
             defaultValue=""
           />

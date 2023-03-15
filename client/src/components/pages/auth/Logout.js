@@ -10,6 +10,7 @@ const Logout = () => {
       sessionStorage.setItem('userId', "")
       sessionStorage.setItem('Auth Token', "")
       sessionStorage.setItem('username', "")
+      sessionStorage.setItem('autoLogoutTime', "")
       dispatch(setUserRoleAsSimpleManager())
         navigate("/auth/login");
     }

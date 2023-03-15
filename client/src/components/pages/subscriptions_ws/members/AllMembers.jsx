@@ -18,18 +18,18 @@ const Members = () => {
   useEffect(() => {
     if(isSuccess && isSuccessDeleteSubscriptionByMemberId){
       navigate("")
-      console.log(`member deleted successfully`);
+      alert(`member deleted successfully`);
      }
      if(isErrorDeleting || isErrorDeleteSubscriptionByMemberId){
       if(isErrorDeleting){
-        console.log(`error while deleting data: ${errorDelete}`);
+        alert(`error while deleting data: ${errorDelete}`);
       }
       if(isErrorDeleteSubscriptionByMemberId){
-        console.log(`error while deleting data by memberId: ${errorDeleteSubscriptionByMemberId}`);
+        alert(`error while deleting data by memberId: ${errorDeleteSubscriptionByMemberId}`);
       }
      }
      if(isError){
-      console.log(`error while fetching data: ${error}`);
+      alert(`error while fetching data: ${error}`);
      }
   }, [isSuccess,isSuccessDeleteSubscriptionByMemberId,isErrorDeleteSubscriptionByMemberId,isErrorDeleting,isError])
   const handleDelete = async(id) =>{
@@ -40,7 +40,6 @@ const Members = () => {
     }
   }
   const handleEdit = (id) =>{
-    console.log(`navigate to EditMember Page details with id: ${id}`)
     if(id){
       navigate(`${id}`)
     }

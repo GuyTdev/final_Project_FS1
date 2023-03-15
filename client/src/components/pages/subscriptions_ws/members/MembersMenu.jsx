@@ -14,21 +14,16 @@ const MembersMenu = () => {
   const route= useResolvedPath()
   const {id} = useParams()
   const {permissions} = useSelector(state=>state.user.userDetails)
-  let pages = [
+  let pages = permissions?.includes("Create Subscriptions")?[
     { componentName: AllMembers, viewName: "All Members", routeName: "" },
     { componentName: AddMember, viewName: "Add Member", routeName: "addmember"}
-  ]
+  ]:[{ componentName: AllMembers, viewName: "All Members", routeName: "" }]
   const [value, setValue] = useState(route.pathname ==='/api/members/addmember'?pages[1].viewName:pages[0].viewName);
   const navigate = useNavigate();
   useEffect(() => {
     setValue(route.pathname ==='/api/members/addmember'?pages[1].viewName: pages[0].viewName)
   }, [route.pathname])
-  useEffect(() => {
-    if(permissions?.includes(" Create Subscriptions"))
-      pages=[{ componentName: AllMembers, viewName: "All Members", routeName: "" }]
-  }, [permissions])
 
-  
   const handleChange = (event, newValue) => {
     setValue(newValue);
     navigate(`${event.target.name}`)

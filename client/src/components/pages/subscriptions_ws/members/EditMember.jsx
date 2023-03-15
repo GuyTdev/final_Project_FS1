@@ -11,6 +11,7 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import { useEffect, useState } from "react";
 import { useUpdateMemberMutation, useGetMemberQuery } from "../../../../rtk/features/members/membersApiSlice";
 import { useNavigate, useParams } from "react-router-dom";
+import LoggedInUser from "../../LoggedInUser";
 
 const EditMember = () => {
   const {id} = useParams();
@@ -34,7 +35,6 @@ const EditMember = () => {
       console.log(error);
     }
     if(isSuccess){
-      console.log(`successfully updated member with id:${id}`);
       navigate("");
     }
   }, [isSuccess,isError])
@@ -44,7 +44,6 @@ const EditMember = () => {
     }
   }
   const handleCancel = (e) => {
-    console.log("canceled");
     navigate("");
   };
   const handleChange = (e) => {

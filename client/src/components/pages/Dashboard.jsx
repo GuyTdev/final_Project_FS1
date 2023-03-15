@@ -14,7 +14,6 @@ import LoggedInUser from "./LoggedInUser";
         setLoggedInUser(username)
         if (authToken) {
             setLoggedInUser({id:userId, username:username})
-            // navigate('/api')
         }
         if (!authToken) {
             alert("Please Login First");

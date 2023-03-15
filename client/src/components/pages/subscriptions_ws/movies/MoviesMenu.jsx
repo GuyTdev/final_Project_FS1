@@ -14,19 +14,16 @@ const MoviesMenu = () => {
   const route= useResolvedPath()
   const {id} = useParams()
   const {permissions} = useSelector(state=>state.user.userDetails)
-  let pages = [
+  let pages = permissions?.includes("Create Movies")?[
     { componentName: AllMovies, viewName: "All Movies", routeName: "" },
     { componentName: AddMovie, viewName: "Add Movie", routeName: "addmovie"}
-  ]
+  ]:[{ componentName: AllMovies, viewName: "All Movies", routeName: "" }]
   const [value, setValue] = useState(route.pathname ==='/api/movies/addmovie'?pages[1].viewName:pages[0].viewName);
   const navigate = useNavigate();
   useEffect(() => {
     setValue(route.pathname ==='/api/movies/addmovie'?pages[1].viewName: pages[0].viewName)
   }, [route.pathname])
-  useEffect(() => {
-    if(permissions?.includes(" Create Movies"))
-      pages=[{ componentName: AllMovies, viewName: "All Movies", routeName: "" }]
-  }, [permissions])
+
 
   const handleChange = (event, newValue) => {
     setValue(newValue);

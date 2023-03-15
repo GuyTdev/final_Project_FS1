@@ -38,7 +38,6 @@ const AddMovie = () => {
       console.log(error);
     }
     if(isSuccess){
-      console.log(`successfully create movie ${movie.name}`);
       navigate("");
     }
   }, [isSuccess,isError])
@@ -47,12 +46,10 @@ const AddMovie = () => {
     if (movie) {
       const dateISOStringFormat= moment(movie.premiered).format('L').replaceAll('/', '-')
       const newMovie = {...movie, premiered: dateISOStringFormat };
-      console.log(newMovie);
       await createMovie(newMovie);
     }
   }
   const handleCancel = (e) => {
-    console.log("canceled");
     navigate("");
   };
   const handleChange = (e) => {

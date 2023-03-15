@@ -22,10 +22,9 @@ const AddMovieToSubscription = ({ member_id, memberMoviesIdsSubscribedArray, set
   const [createSubscription, { isSuccess:isSuccessCreate }] = useCreateSubscriptionMutation();
   useEffect(() => {
     if(isError){
-      console.log(error);
+      alert(error);
     }
     if(isSuccessCreate){
-      console.log(`successfully create subscription of Member: ${member_id} with movie id: ${selectedMovie.movieId}`);
       setShowAddMovieToSubscriptionsBox(false);
     }
   }, [isSuccessCreate, isError])

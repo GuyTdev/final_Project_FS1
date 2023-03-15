@@ -15,7 +15,6 @@ const MoviesWatched = ({ member_id }) => {
   let memberSubscribedMoviesNamesAndDates = [];
   let memberMoviesIdsSubscribedArray = [];
   if (isSuccess && isSuccessMovies) {
-    console.log(`subscription of ${member_id}`, subscription);
     memberMoviesIdsSubscribedArray = subscription?.movies?.map(
       (movie) => movie.movieId
     );
