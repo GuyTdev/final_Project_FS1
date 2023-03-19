@@ -15,7 +15,6 @@ import { useState } from 'react';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { useCreateUserPasswordMutation } from '../../../rtk/features/auth/authSlice';
-import { useDispatch } from 'react-redux';
 
 function Copyright(props) {
   return (

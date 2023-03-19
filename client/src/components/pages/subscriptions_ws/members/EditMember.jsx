@@ -11,7 +11,6 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import { useEffect, useState } from "react";
 import { useUpdateMemberMutation, useGetMemberQuery } from "../../../../rtk/features/members/membersApiSlice";
 import { useNavigate, useParams } from "react-router-dom";
-import LoggedInUser from "../../LoggedInUser";
 
 const EditMember = () => {
   const {id} = useParams();
