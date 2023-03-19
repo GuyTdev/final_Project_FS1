@@ -35,14 +35,14 @@ const Movies = () => {
      }
      if(isErrorDeleting||isErrorDeleteMovieFromAllSubscriptions){
       if(isErrorDeleting){
-        alert(`error while deleting data: ${errorDelete}`);
+        console.log(`error while deleting data: ${errorDelete}`);
       }
       if(isErrorDeleteMovieFromAllSubscriptions){
-        alert(`error while deleting data: ${errorDeleteMovieFromAllSubscriptions}`);
+        console.log(`error while deleting data: ${errorDeleteMovieFromAllSubscriptions}`);
       }
      }
      if(isError){
-      alert(`error while fetching data: ${error}`);
+      console.log(`error while fetching data: ${error}`);
      }
   }, [isSuccess,isErrorDeleting,isError,isErrorDeleteMovieFromAllSubscriptions,isSuccessDeleteMovieFromAllSubscriptions])
   
