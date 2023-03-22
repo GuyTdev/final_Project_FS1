@@ -1,5 +1,5 @@
 import axios from 'axios'
-const subscriptionsWsBaseUri = 'http://localhost:4000/api'
+const subscriptionsWsBaseUri = 'https://subscriptions-ws.onrender.com:4000/api'
 const subscriptionsUri = `${subscriptionsWsBaseUri}/subscriptions`
 const membersUri = `${subscriptionsWsBaseUri}/members`
 const moviesUri = `${subscriptionsWsBaseUri}/movies`
