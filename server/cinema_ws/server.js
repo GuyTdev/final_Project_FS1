@@ -15,7 +15,6 @@ app.use(express.json());
 app.use(cors());
 
 //Main Routes
-app.use('',()=> console.log("hello from cinema server"))
 app.use('/auth', authRouter)
 app.use('/api/users', usersRouter)
 app.use('/api/subscriptions_ws', subscriptionsWS_Router)
