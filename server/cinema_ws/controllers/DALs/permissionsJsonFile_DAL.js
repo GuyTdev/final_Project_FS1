@@ -1,6 +1,6 @@
 import jFile from 'jsonfile';
 import path from 'path'
-const filePath=`${path}../../../JsonFiles/permissions.json`
+const filePath=path.join(process.cwd(),'JsonFiles','permissions.json')
 export const readPermissionsJsonFile = () =>
 {
     return jFile.readFile(filePath);
