@@ -66,6 +66,7 @@ export default function CreateAccount() {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
+            mx: 1
           }}
         >
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
@@ -73,7 +74,7 @@ export default function CreateAccount() {
           <Typography component="h1" variant="h5">
             Create Account
           </Typography>
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 ,width: {xs:"35ch", md:"40ch",lg:"45ch"} }}>
+          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
             <TextField
               margin="normal"
               required
@@ -85,7 +86,7 @@ export default function CreateAccount() {
               placeholder='type username given by your admin'
               autoFocus
             />
-<FormControl sx={{ mt: 1, width: {xs:"35ch", md:"40ch",lg:"45ch"}}} variant="outlined">
+<FormControl sx={{ mt: 1,width:"100%"}} variant="outlined">
           <InputLabel htmlFor="outlined-adornment-password" required>Choose a password</InputLabel>
           <OutlinedInput
             id="outlined-adornment-password"
