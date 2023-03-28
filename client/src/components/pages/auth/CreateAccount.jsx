@@ -73,7 +73,7 @@ export default function CreateAccount() {
           <Typography component="h1" variant="h5">
             Create Account
           </Typography>
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 ,width: {xs:"35ch", md:"40ch",lg:"45ch"} }}>
             <TextField
               margin="normal"
               required
@@ -85,7 +85,7 @@ export default function CreateAccount() {
               placeholder='type username given by your admin'
               autoFocus
             />
-<FormControl sx={{ mt: 1, width:'45ch' }} variant="outlined">
+<FormControl sx={{ mt: 1, width: {xs:"35ch", md:"40ch",lg:"45ch"}}} variant="outlined">
           <InputLabel htmlFor="outlined-adornment-password" required>Choose a password</InputLabel>
           <OutlinedInput
             id="outlined-adornment-password"
