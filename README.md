@@ -1,4 +1,4 @@
-https://guytdev-msw.netlify.app/api/movies
+https://guytdev-msw.netlify.app/
 # final_Project_FS1
 Movies Subscriptions Managment website
 
